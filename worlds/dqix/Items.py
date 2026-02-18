@@ -28,11 +28,11 @@ class DQIXItems:
 
     def _parse_item_data(self):
         file = pkgutil.get_data(__name__, "data/items.json").decode("utf-8")
-        items = json.loads(file)
+        loaded_items = json.loads(file)
 
-        self.progression_items = {name: ItemData(name, item_data["code"], ItemType(item_data["item_type"]), ItemClassification.progression) for name, item_data in items["progression"].items()}
-        self.useful_items = {name: ItemData(name, item_data["code"], ItemType(item_data["item_type"]), ItemClassification.useful) for name, item_data in items["useful"].items()}
-        self.filler_items = {name: ItemData(name, item_data["code"], ItemType(item_data["item_type"]), ItemClassification.filler) for name, item_data in items["filler"].items()}
+        self.progression_items = {name: ItemData(name, item_data["code"], ItemType(item_data["item_type"]), ItemClassification.progression) for name, item_data in loaded_items["progression"].items()}
+        self.useful_items = {name: ItemData(name, item_data["code"], ItemType(item_data["item_type"]), ItemClassification.useful) for name, item_data in loaded_items["useful"].items()}
+        self.filler_items = {name: ItemData(name, item_data["code"], ItemType(item_data["item_type"]), ItemClassification.filler) for name, item_data in loaded_items["filler"].items()}
 
         final_item_table = {}
         final_item_table.update(self.progression_items)

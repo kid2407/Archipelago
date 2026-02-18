@@ -48,18 +48,23 @@ class DragonQuestIX(World):
     item_name_to_id = item_helper.get_items()
 
     def create_item(self, name: str) -> "DQIXItem":
-        return DQIXItem(
-            "Fygg" if name.startswith("Fygg ") else name,
-            ItemClassification.progression if self.item_helper.is_progression(name) else ItemClassification.useful if self.item_helper.is_useful(name) else ItemClassification.filler,
-            self.item_name_to_id[name],
-            self.player,
-            self.item_helper.get_item_type(name)
-        )
+        return DQIXItem(name,
+                        ItemClassification.progression if self.item_helper.is_progression(name) else ItemClassification.useful if self.item_helper.is_useful(name) else ItemClassification.filler,
+                        self.item_name_to_id[name],
+                        self.player,
+                        self.item_helper.get_item_type(name)
+                        )
 
     def create_items(self) -> None:
         # Generate / Load all progression items
         progression_item_names = {k for k in self.item_name_to_id.keys() if self.item_helper.is_progression(k)}
-        items = [self.create_item(name) for name in progression_item_names]
+        items = []
+        for name in progression_item_names:
+            if name == "Fygg":
+                for _ in range(7):
+                    items.append(self.create_item(name))
+            else:
+                items.append(self.create_item(name))
 
         # Fill up to 90% of the remaining item slots with useful items
         remaining_count_until_almost_full = (round(len(self.location_name_to_id) * 0.9) - len(items))
@@ -250,6 +255,8 @@ class DragonQuestIX(World):
         self.multiworld.regions.append(region_gittingham_palace)
         self.multiworld.regions.append(region_oubliette)
         self.multiworld.regions.append(region_realm_of_the_mighty)
+
+        self.multiworld.completion_condition[self.player] = lambda state: state.has("Ultimate key", self.player)
 
         # TODO place event items / locations, where no actual item could be used
 
