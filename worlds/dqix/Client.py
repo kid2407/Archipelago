@@ -4,7 +4,7 @@ from typing import TYPE_CHECKING
 import worlds._bizhawk as bizhawk
 from NetUtils import NetworkItem
 from worlds._bizhawk.client import BizHawkClient
-from worlds.dqix.InventoryHelper import InventoryHelper
+from worlds.dqix.helper.InventoryHelper import InventoryHelper
 
 if TYPE_CHECKING:
     from worlds._bizhawk.context import BizHawkClientContext
@@ -44,6 +44,7 @@ class DQIXClient(BizHawkClient):
 
         try:
             await self.location_check(ctx)
+            await self.bestiary_check(ctx)
             await self.received_items_check(ctx)
 
         except bizhawk.RequestFailedError:
@@ -67,3 +68,6 @@ class DQIXClient(BizHawkClient):
                 inventory_helper = InventoryHelper(ctx=ctx)
                 await inventory_helper.grant_received_item(item_id=network_item.item)
                 # TODO save the last item index in a save file or save state
+
+    async def bestiary_check(self, ctx: "BizHawkClientContext"):
+        pass  # TODO implement

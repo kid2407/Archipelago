@@ -9,6 +9,9 @@ class DQIXConstants:
     GOLD_IN_BANK = 0x0F6D44
     GOLD_AT_HAND = 0x0F6D48
 
+    # Monster Data
+    BESTIARY_START_OFFSET = 0x0FA9C8 #TODO Add actual address / check it works
+
     # Common Items (Bag)
     COMMON_ITEMS_TYPE_OFFSET = 0x0F5DE8
     COMMON_ITEMS_COUNTS_OFFSET = 0x0F5F18

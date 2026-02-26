@@ -258,6 +258,10 @@ class DragonQuestIX(World):
 
         self.multiworld.completion_condition[self.player] = lambda state: state.has("Ultimate key", self.player)
 
+        # state = self.multiworld.get_all_state(False)
+        # state.update_reachable_regions(self.player)
+        # visualize_regions(self.get_region(self.origin_region_name), "my_world.puml", show_entrance_names=True, regions_to_highlight=state.reachable_regions[self.player])
+
         # TODO place event items / locations, where no actual item could be used
 
     def get_filler_item_name(self) -> str:
