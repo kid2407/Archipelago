@@ -1,7 +1,11 @@
 import logging
+from typing import TYPE_CHECKING
 
 from worlds.dqix.Constants import DQIXConstants
 from worlds.dqix.helper.BaseHelper import BaseHelper
+
+if TYPE_CHECKING:
+    from worlds._bizhawk.context import BizHawkClientContext
 
 
 class BeastiaryEntry:
@@ -16,6 +20,8 @@ class BeastiaryEntry:
 
 
 class BestiaryHelper(BaseHelper):
+    def __init__(self, ctx: "BizHawkClientContext"):
+        super().__init__(ctx)
 
     async def get_monster_data(self, monster_id: int) -> BeastiaryEntry:
         if monster_id < 1 or monster_id > 307:

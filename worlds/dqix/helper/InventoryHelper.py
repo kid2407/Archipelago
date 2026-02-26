@@ -1,9 +1,14 @@
 import logging
 from enum import Enum
+from typing import TYPE_CHECKING
 
 from worlds.dqix.Constants import DQIXConstants
 from worlds.dqix.Items import ItemType, DQIXItems
 from worlds.dqix.helper.BaseHelper import BaseHelper
+
+if TYPE_CHECKING:
+    from worlds._bizhawk.context import BizHawkClientContext
+
 
 
 class EquipmentType(Enum):
@@ -18,6 +23,9 @@ class EquipmentType(Enum):
 
 
 class InventoryHelper(BaseHelper):
+    def __init__(self, ctx: "BizHawkClientContext"):
+        super().__init__(ctx)
+
     @staticmethod
     def determine_item_type(item_id: int):
         if 12000 <= item_id < 22000:
