@@ -1,4 +1,3 @@
-import logging
 from typing import TYPE_CHECKING
 
 from worlds.dqix.Constants import DQIXConstants
@@ -18,8 +17,39 @@ class BeastiaryEntry:
     def has_defeated_monster(self) -> bool:
         return self.defeated_count > 0
 
+    def to_json(self):
+        return {
+            "defeated_count": self.defeated_count,
+            "eye_for_trouble": self.eye_for_trouble,
+            "normal_drop_count": self.normal_drop_count,
+            "rare_drop_count": self.rare_drop_count
+        }
+
 
 class BestiaryHelper(BaseHelper):
+    BOSSES = {
+        "Hexagoon": 257,
+        "Wight Knight": 258,
+        "Morag": 259,
+        "Ragin' Contagion": 260,
+        "Master of Nu'un": 261,
+        "Lleviathan": 262,
+        "Garth Goyle": 263,
+        "Tyrantula": 264,
+        "Grand Lizzier": 265,
+        "Larstastnaras": 266,
+        "Dreadmaster": 267,
+        "Gadrongo": 268,
+        "Greygnarl": 269,
+        "Goreham-Hogg": 270,
+        "Hootingham-Gore": 271,
+        "Goresby-Purrvis": 272,
+        "King Godwyn": 274,
+        "Corvus (I)": 276,
+        "Barbarus": 275,
+        "Corvus (II)": 277,
+    }
+
     def __init__(self, ctx: "BizHawkClientContext"):
         super().__init__(ctx)
 
@@ -30,11 +60,9 @@ class BestiaryHelper(BaseHelper):
         target_address = DQIXConstants.BESTIARY_START_OFFSET + target_index * 4
 
         data = await self.read_int_from_ram(address=target_address, size=4)
-        logging.warning("Got data for monster with id = {0}}: {1}".format(monster_id, hex(data)))
 
         bin_str = '{:032b}'.format(data)
 
-        # TODO check if it is actually the correct way around
         defeated_count = int(bin_str[22:32], 2)  # 10 bits, max 999
         eye_for_trouble = int(bin_str[21:22], 2)  # 1 bit, max 1
         normal_drop_count = int(bin_str[7:14], 2)  # 7 bits, max 99

@@ -17,8 +17,7 @@
     "The Hexagon - L1": 7101,
     "The Hexagon - B1": 7102,
     "The Hexagon - B2": 7103,
-    "The Hexagon - B1 (upper)": 7104,
-    "The Hexagon - B1 (boss)": 7105
+    "The Hexagon - B1 (upper)": 7104
   },
   "Stornway": {
     "Stornway - church": 109,
@@ -37,15 +36,7 @@
     "Stornway Castle - L3": 120,
     "Stornway Castle - well": 123,
     "Stornway Castle - cellar": 124,
-    "Stornway Castle - ???": 125,
-    "Stornway Castle - outside L2": 198,
-    "Quester's Rest - Lobby 1": 50101,
-    "Quester's Rest - Lounge 1": 50102,
-    "Quester's Rest - Guest Room 1": 50103,
-    "Quester's Rest - Guardian Fountain": 50107,
-    "Quester's Rest - Royal Suites - Corridor": 50108,
-    "Quester's Rest - Royal Suites - East": 50109,
-    "Quester's Rest - Royal Suites - West": 50110
+    "Stornway Castle - outside L2": 198
   },
   "Zere": {
     "Zere - church": 1202,
@@ -167,8 +158,7 @@
     "Bloomingdale - inn B1": 1911,
     "Bloomingdale - old man's bath": 1912,
     "Bloomingdale - old man's bath B1": 1913,
-    "Bloomingdale - well": 1914,
-    "Bloomingdale - flashback": 1915
+    "Bloomingdale - well": 1914
   },
   "Bad Cave": {
     "The Bad Cave - Entrance": 7900,
@@ -176,10 +166,11 @@
     "The Bad Cave - L1 (hideout)": 7902,
     "The Bad Cave - L1 (part 2)": 7903,
     "The Bad Cave - B1": 7904,
-    "The Bad Cave - B2": 7905,
-    "The Bad Cave - B2 (boss)": 7906
+    "The Bad Cave - B2": 7905
   },
-  "Ocean": {},
+  "Ocean": {
+    "On the Sea": 10000
+  },
   "Ship": {
     "Ship - Deck": 5900,
     "Ship - Captain's Cabin": 5901,
@@ -268,8 +259,7 @@
     "The Bowhole - L1 (side room)": 8403,
     "The Bowhole - B2": 8404,
     "The Bowhole - B3": 8405,
-    "The Bowhole - B4": 8406,
-    "The Bowhole - B4 (boss)": 8407
+    "The Bowhole - B4": 8406
   },
   "Upover": {
     "Upover - church": 2309,
@@ -306,8 +296,7 @@
     "Gortress - Watchtower, L2": 5703,
     "Gortress - L1": 5704,
     "Gortress - L2": 5705,
-    "Gortress - B1": 5706,
-    "Gortress - event": 5707
+    "Gortress - B1": 5706
   },
   "Gittingham Palace": {
     "Gittingham Palace - priest": 406,
@@ -327,8 +316,7 @@
     "Oubliette - B3": 8703,
     "Oubliette - B4": 8704,
     "Oubliette - B5": 8705,
-    "Oubliette - B6": 8706,
-    "Oubliette - event": 8707
+    "Oubliette - B6": 8706
   },
   "Realm of the Mighty": {
     "Realm of the Mighty - entrance": 4400,
@@ -353,21 +341,15 @@
     "Realm of the Mighty - L11": 4421,
     "Palace of the Mighty": 4422,
     "Palace of the Mighty, L1": 4423,
-    "Palace of the Mighty, L2": 4424,
-    "Realm of the Mighty (event)": 4499
+    "Palace of the Mighty, L2": 4424
   },
   "Observatory": {
     "Observatory (after attack) - church": 4506,
-    "Observatory (after attack) (event)": 4500,
     "Observatory (after attack) L1-L2": 4501,
     "Observatory (after attack) L3": 4503,
     "Observatory (after attack) L4": 4504,
     "Observatory (after attack) L1": 4505,
     "Observatory (after attack) L2": 4507,
-    "Observatory (after attack) L3 (interior)": 4509,
-    "Observatory (after attack) L3 (event)": 4510,
-    "Observatory (after attack) L4 (event)": 4511,
-    "Observatory (after attack) L4 (for ending)": 4512,
-    "Observatory (after attack) L2 (flashback)": 4513
+    "Observatory (after attack) L3 (interior)": 4509
   }
 }

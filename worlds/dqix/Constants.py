@@ -10,7 +10,13 @@ class DQIXConstants:
     GOLD_AT_HAND = 0x0F6D48
 
     # Monster Data
-    BESTIARY_START_OFFSET = 0x0FA9C8 #TODO Add actual address / check it works
+    BESTIARY_START_OFFSET = 0x0FA9C8
+
+    CURRENT_MAP = 0x0F37D0
+    #
+    IN_BATTLE = 0x0F1F7C
+    IN_GAME = 0x0FB348
+    HERO_NAME_START = 0x0FB2F4
 
     # Common Items (Bag)
     COMMON_ITEMS_TYPE_OFFSET = 0x0F5DE8
