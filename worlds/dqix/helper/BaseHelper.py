@@ -1,3 +1,4 @@
+import logging
 from typing import TYPE_CHECKING, List
 # noinspection PyProtectedMember
 import worlds._bizhawk as bizhawk
@@ -27,3 +28,11 @@ class BaseHelper:
         address = int(address, 16) if isinstance(address, str) else address
         read_bytes = (await bizhawk.read(ctx=self.ctx.bizhawk_ctx, read_list=[(address, segment_size * segment_count, "Main RAM")]))[0]
         return [int.from_bytes(read_bytes[segment * segment_size:(segment * segment_size + segment_size)], "little") for segment in range(segment_count)]
+
+    @staticmethod
+    def info(msg: str, *args):
+        logging.info("[DQIX] " + msg, *args)
+
+    @staticmethod
+    def warning(msg: str, *args):
+        logging.warning("[DQIX] " + msg, *args)

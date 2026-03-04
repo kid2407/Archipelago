@@ -10,7 +10,6 @@ if TYPE_CHECKING:
     from worlds._bizhawk.context import BizHawkClientContext
 
 
-
 class EquipmentType(Enum):
     WEAPONS = "WEAPONS"
     SHIELDS = "SHIELDS"
@@ -75,7 +74,7 @@ class InventoryHelper(BaseHelper):
             case ItemType.EQUIPMENT:
                 await self.grant_equipment(item_id=item_id)
             case None:
-                logging.warning("Uh-oh, could not determine the item type for item with ID = {0}. This should not happen, please report this error to the author.".format(item_id))
+                self.warning("Uh-oh, could not determine the item type for item with ID = {0}. This should not happen, please report this error to the author.".format(item_id))
 
     async def grant_gold(self, item_id: int):
         current_gold = await self.read_int_from_ram(address=DQIXConstants.GOLD_AT_HAND, size=DQIXConstants.GOLD_VALUE_SIZE)
@@ -138,7 +137,7 @@ class InventoryHelper(BaseHelper):
             case EquipmentType.ACCESSORIES:
                 await self.give_player_item(DQIXConstants.ACCESSORIES_TYPE_OFFSET, DQIXConstants.ACCESSORIES_COUNTS_OFFSET, DQIXConstants.ACCESSORIES_SEGMENTS, item_id)
             case None:
-                logging.warning("Uh-oh, could not determine the equipment type for equipment with ID = {0}. This should not happen, please report this error to the author.".format(item_id))
+                self.warning("Uh-oh, could not determine the equipment type for equipment with ID = {0}. This should not happen, please report this error to the author.".format(item_id))
 
     async def give_player_item(self, item_offset: int, amount_offset: int, segment_count: int, item_id: int):
         item_inventory = await self.read_segments_as_ints_from_ram(item_offset, segment_count, DQIXConstants.ITEM_TYPE_SIZE)
@@ -151,7 +150,7 @@ class InventoryHelper(BaseHelper):
                 target_slot = item_inventory.index(DQIXConstants.ITEM_DATA_NO_ITEM)
                 existing_slot = False
             except ValueError:
-                logging.warning("Cannot add item \"{}\": No empty slot in inventory found!".format(item_id))
+                self.warning("Cannot add item \"{}\": No empty slot in inventory found!".format(item_id))
                 return
 
         item_address = hex(item_offset + 2 * target_slot)
@@ -165,12 +164,12 @@ class InventoryHelper(BaseHelper):
             await self.write_int_to_ram(address=amount_address, size=DQIXConstants.ITEM_AMOUNT_SIZE, value=1)
 
     async def give_character_experience(self, current_vocation: int, experience_offset: int, earned_experience: int):
-        logging.warning("Current vocation: " + str(current_vocation))
-        logging.warning("Exp Offset: " + hex(experience_offset))
+        self.warning("Current vocation: " + str(current_vocation))
+        self.warning("Exp Offset: " + hex(experience_offset))
         if current_vocation == 0:
             return
 
         target_address = experience_offset + (current_vocation - 1) * 4
         current_exp = await self.read_int_from_ram(target_address, 4)
-        logging.warning("Current exp: " + str(current_exp))
+        self.warning("Current exp: " + str(current_exp))
         await self.write_int_to_ram(target_address, 4, current_exp + earned_experience)
