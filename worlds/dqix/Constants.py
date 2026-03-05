@@ -4,6 +4,8 @@ class DQIXConstants:
     ITEM_AMOUNT_SIZE = 1
     GOLD_VALUE_SIZE = 4
 
+    LAST_KNOWN_INDEX = 0x0F9552
+
     ITEM_DATA_NO_ITEM = 65535
 
     GOLD_IN_BANK = 0x0F6D44
@@ -16,7 +18,7 @@ class DQIXConstants:
     #
     IN_BATTLE = 0x0F1F7C
     IN_GAME = 0x0FB348
-    HERO_NAME_START = 0x0FB2F4
+    HERO_NAME_START = 0x109030
 
     # Common Items (Bag)
     COMMON_ITEMS_TYPE_OFFSET = 0x0F5DE8

@@ -59,7 +59,7 @@ class DQIXClient(BizHawkClient):
                 await bizhawk.set_message_interval(ctx=ctx.bizhawk_ctx, value=5)
 
                 if self.last_known_index is None:
-                    self.last_known_index = await self.base_helper.read_int_from_ram(0x0F9552, 4)
+                    self.last_known_index = await self.base_helper.read_int_from_ram(DQIXConstants.LAST_KNOWN_INDEX, 4)
                     BaseHelper.info("Read last known index from RAM, it is: " + str(self.last_known_index))
 
                 await self.location_check(ctx)
@@ -113,8 +113,8 @@ class DQIXClient(BizHawkClient):
                 await inventory_helper.grant_received_item(item_id=network_item.item)
                 self.last_known_index = index
                 BaseHelper.info("Updating last known index, it is now " + str(index))
-                await self.base_helper.write_int_to_ram(0x0F9552, 4, index)
-                BaseHelper.info("Confirming last known index: " + str(await self.base_helper.read_int_from_ram(0x0F9552, 4)))
+                await self.base_helper.write_int_to_ram(DQIXConstants.LAST_KNOWN_INDEX, 4, index)
+                BaseHelper.info("Confirming last known index: " + str(await self.base_helper.read_int_from_ram(DQIXConstants.LAST_KNOWN_INDEX, 4)))
         BaseHelper.info("End: Checking Received Items")
 
     @staticmethod
