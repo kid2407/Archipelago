@@ -1,4 +1,3 @@
-import logging
 from enum import Enum
 from typing import TYPE_CHECKING
 
@@ -39,7 +38,7 @@ class InventoryHelper(BaseHelper):
 
     @staticmethod
     def determine_equipment_type(item_id: int):
-        if 19050 <= item_id <= 2091822:
+        if 19050 <= item_id <= 20918:
             return EquipmentType.WEAPONS
         elif 21000 <= item_id < 22000:
             return EquipmentType.SHIELDS
