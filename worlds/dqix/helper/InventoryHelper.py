@@ -40,19 +40,19 @@ class InventoryHelper(BaseHelper):
     def determine_equipment_type(item_id: int):
         if 19050 <= item_id <= 20918:
             return EquipmentType.WEAPONS
-        elif 21000 <= item_id < 22000:
+        elif 21000 <= item_id <= 22000:
             return EquipmentType.SHIELDS
-        elif 12100 <= item_id < 13000:
+        elif 12100 <= item_id <= 13000:
             return EquipmentType.HEADWEAR
-        elif 13000 <= item_id < 14000:
+        elif 13000 <= item_id <= 14000:
             return EquipmentType.TORSO
-        elif 15000 <= item_id < 15300:
+        elif 15000 <= item_id <= 15300:
             return EquipmentType.ARMS
-        elif 16000 <= item_id < 16400:
+        elif 16000 <= item_id <= 16400:
             return EquipmentType.LEGS
-        elif 17000 <= item_id < 17500:
+        elif 17000 <= item_id <= 17500:
             return EquipmentType.FOOTWEAR
-        elif 18000 <= item_id < 18055:
+        elif 18000 <= item_id <= 18055:
             return EquipmentType.ACCESSORIES
         return None
 

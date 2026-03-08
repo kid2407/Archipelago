@@ -9,6 +9,8 @@ if TYPE_CHECKING:
 
 
 class BaseHelper:
+    DEBUG_MODE = False
+
     def __init__(self, ctx: "BizHawkClientContext"):
         self.ctx = ctx
 
@@ -36,3 +38,8 @@ class BaseHelper:
     @staticmethod
     def warning(msg: str, *args):
         logging.warning("[DQIX] " + msg, *args)
+
+    @staticmethod
+    def debug(msg: str, *args):
+        if BaseHelper.DEBUG_MODE:
+            logging.debug("[DQIX] " + msg, *args)
