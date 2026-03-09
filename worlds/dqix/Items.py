@@ -12,6 +12,7 @@ class ItemType(Enum):
     EXPERIENCE = "exp"
     GOLD = "gold"
     IMPORTANT_ITEM = "important"
+    BOSS_ITEM = "boss"
 
 
 class ItemData(NamedTuple):

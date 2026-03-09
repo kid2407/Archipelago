@@ -1,8 +1,9 @@
 from typing import Optional
 
 from BaseClasses import Tutorial, Item, ItemClassification, Location, Region
+from Utils import visualize_regions
 from ..AutoWorld import World, WebWorld
-from .Items import DQIXItems
+from .Items import DQIXItems, ItemType
 from .Client import DQIXClient
 from .Locations import DQIXLocations
 
@@ -80,23 +81,35 @@ class DragonQuestIX(World):
         region_angel_falls.add_locations(locations=self.location_helper.get_locations_for_group(region_angel_falls.name), location_type=DQIXLocation)
         region_hexagon = Region("Hexagon", self.player, self.multiworld)
         region_hexagon.add_locations(locations=self.location_helper.get_locations_for_group(region_hexagon.name), location_type=DQIXLocation)
-        region_hexagon.add_event("Boss: Hexagon", "Defeated Hexagoon")
+
+        hexagon_boss = DQIXLocation(self.player, "Boss: Hexagon", 50000, region_hexagon)
+        hexagon_boss.place_locked_item(DQIXItem("Defeated Hexagoon", ItemClassification.progression, 50000, self.player, ItemType.BOSS_ITEM.value))
+        region_hexagon.locations.append(hexagon_boss)
 
         region_stornway = Region("Stornway", self.player, self.multiworld)
         region_stornway.add_locations(locations=self.location_helper.get_locations_for_group(region_stornway.name), location_type=DQIXLocation)
-        region_stornway.add_event("Boss: Wight Knight", "Defeated Wight Knight")
+
+        stornway_boss = DQIXLocation(self.player, "Boss: Wight Knight", 50001, region_stornway)
+        stornway_boss.place_locked_item(DQIXItem("Defeated Wight Knight", ItemClassification.progression, 50001, self.player, ItemType.BOSS_ITEM.value))
+        region_stornway.locations.append(stornway_boss)
 
         region_zere = Region("Zere", self.player, self.multiworld)
         region_zere.add_locations(locations=self.location_helper.get_locations_for_group(region_zere.name), location_type=DQIXLocation)
         region_brigadoom = Region("Brigadoom", self.player, self.multiworld)
         region_brigadoom.add_locations(locations=self.location_helper.get_locations_for_group(region_brigadoom.name), location_type=DQIXLocation)
-        region_brigadoom.add_event("Boss: Morag", "Defeated Morag")
+
+        brigadoom_boss = DQIXLocation(self.player, "Boss: Morag", 50002, region_brigadoom)
+        brigadoom_boss.place_locked_item(DQIXItem("Defeated Morag", ItemClassification.progression, 50002, self.player, ItemType.BOSS_ITEM.value))
+        region_brigadoom.locations.append(brigadoom_boss)
 
         region_coffinwell = Region("Coffinwell", self.player, self.multiworld)
         region_coffinwell.add_locations(locations=self.location_helper.get_locations_for_group(region_coffinwell.name), location_type=DQIXLocation)
         region_quarantomb = Region("Quarantomb", self.player, self.multiworld)
         region_quarantomb.add_locations(locations=self.location_helper.get_locations_for_group(region_quarantomb.name), location_type=DQIXLocation)
-        region_quarantomb.add_event("Boss: Ragin' Contagion", "Defeated Ragin' Contagion")
+
+        quarantomb_boss = DQIXLocation(self.player, "Boss: Ragin' Contagion", 50003, region_quarantomb)
+        quarantomb_boss.place_locked_item(DQIXItem("Defeated Ragin' Contagion", ItemClassification.progression, 50003, self.player, ItemType.BOSS_ITEM.value))
+        region_quarantomb.locations.append(quarantomb_boss)
 
         region_observatory = Region("Observatory", self.player, self.multiworld)
         region_observatory.add_locations(locations=self.location_helper.get_locations_for_group(region_observatory.name), location_type=DQIXLocation)
@@ -105,13 +118,19 @@ class DragonQuestIX(World):
         region_alltrades_abbey.add_locations(locations=self.location_helper.get_locations_for_group(region_alltrades_abbey.name), location_type=DQIXLocation)
         region_tower_of_trades = Region("Tower of Trades", self.player, self.multiworld)
         region_tower_of_trades.add_locations(locations=self.location_helper.get_locations_for_group(region_tower_of_trades.name), location_type=DQIXLocation)
-        region_tower_of_trades.add_event("Boss: Master of Nu'un", "Defeated Master of Nu'un")
+
+        tower_of_trades_boss = DQIXLocation(self.player, "Boss: Master of Nu'un", 50004, region_tower_of_trades)
+        tower_of_trades_boss.place_locked_item(DQIXItem("Defeated Master of Nu'un", ItemClassification.progression, 50004, self.player, ItemType.BOSS_ITEM.value))
+        region_tower_of_trades.locations.append(tower_of_trades_boss)
 
         region_porth_llaffan = Region("Porth Llaffan", self.player, self.multiworld)
         region_porth_llaffan.add_locations(locations=self.location_helper.get_locations_for_group(region_porth_llaffan.name), location_type=DQIXLocation)
         region_tywll_cave = Region("Tywll Cave", self.player, self.multiworld)
         region_tywll_cave.add_locations(locations=self.location_helper.get_locations_for_group(region_tywll_cave.name), location_type=DQIXLocation)
-        region_tywll_cave.add_event("Boss: Lleviathan", "Defeated Lleviathan")
+
+        tywll_cave_boss = DQIXLocation(self.player, "Boss: Lleviathan", 50005, region_tywll_cave)
+        tywll_cave_boss.place_locked_item(DQIXItem("Defeated Lleviathan", ItemClassification.progression, 50005, self.player, ItemType.BOSS_ITEM.value))
+        region_tywll_cave.locations.append(tywll_cave_boss)
 
         region_slurry_quay = Region("Slurry Quay", self.player, self.multiworld)
         region_slurry_quay.add_locations(locations=self.location_helper.get_locations_for_group(region_slurry_quay.name), location_type=DQIXLocation)
@@ -123,13 +142,19 @@ class DragonQuestIX(World):
         region_heights_of_loneliness.add_locations(locations=self.location_helper.get_locations_for_group(region_heights_of_loneliness.name), location_type=DQIXLocation)
         region_zere_rocks = Region("Zere Rocks", self.player, self.multiworld)
         region_zere_rocks.add_locations(locations=self.location_helper.get_locations_for_group(region_zere_rocks.name), location_type=DQIXLocation)
-        region_zere_rocks.add_event("Boss: Garth Goyle", "Defeated Garth Goyle")
+
+        zere_rocks_boss = DQIXLocation(self.player, "Boss: Garth Goyle", 50006, region_zere_rocks)
+        zere_rocks_boss.place_locked_item(DQIXItem("Defeated Garth Goyle", ItemClassification.progression, 50006, self.player, ItemType.BOSS_ITEM.value))
+        region_zere_rocks.locations.append(zere_rocks_boss)
 
         region_bloomingdale = Region("Bloomingdale", self.player, self.multiworld)
         region_bloomingdale.add_locations(locations=self.location_helper.get_locations_for_group(region_bloomingdale.name), location_type=DQIXLocation)
         region_bad_cave = Region("Bad Cave", self.player, self.multiworld)
         region_bad_cave.add_locations(locations=self.location_helper.get_locations_for_group(region_bad_cave.name), location_type=DQIXLocation)
-        region_bad_cave.add_event("Boss: Tyrantula", "Defeated Tyrantula")
+
+        bad_cave_boss = DQIXLocation(self.player, "Boss: Tyrantula", 50007, region_bad_cave)
+        bad_cave_boss.place_locked_item(DQIXItem("Defeated Tyrantula", ItemClassification.progression, 50007, self.player, ItemType.BOSS_ITEM.value))
+        region_bad_cave.locations.append(bad_cave_boss)
 
         region_ocean = Region("Ocean", self.player, self.multiworld)
         region_ocean.add_locations(locations=self.location_helper.get_locations_for_group(region_ocean.name), location_type=DQIXLocation)
@@ -140,48 +165,83 @@ class DragonQuestIX(World):
         region_gleeba.add_locations(locations=self.location_helper.get_locations_for_group(region_gleeba.name), location_type=DQIXLocation)
         region_plumbed_depths = Region("Plumbed Depths", self.player, self.multiworld)
         region_plumbed_depths.add_locations(locations=self.location_helper.get_locations_for_group(region_plumbed_depths.name), location_type=DQIXLocation)
-        region_plumbed_depths.add_event("Boss: Grand Lizzier", "Defeated Grand Lizzier")
+
+        plumbed_depths_boss = DQIXLocation(self.player, "Boss: Grand Lizzier", 50008, region_plumbed_depths)
+        plumbed_depths_boss.place_locked_item(DQIXItem("Defeated Grand Lizzier", ItemClassification.progression, 50008, self.player, ItemType.BOSS_ITEM.value))
+        region_plumbed_depths.locations.append(plumbed_depths_boss)
 
         region_batsureg = Region("Batsureg", self.player, self.multiworld)
         region_batsureg.add_locations(locations=self.location_helper.get_locations_for_group(region_batsureg.name), location_type=DQIXLocation)
         region_gerzuun = Region("Gerzuun", self.player, self.multiworld)
         region_gerzuun.add_locations(locations=self.location_helper.get_locations_for_group(region_gerzuun.name), location_type=DQIXLocation)
-        region_gerzuun.add_event("Boss: Larstastnaras", "Defeated Larstastnaras")
+
+        gerzuun_boss = DQIXLocation(self.player, "Boss: Larstastnaras", 50009, region_gerzuun)
+        gerzuun_boss.place_locked_item(DQIXItem("Defeated Larstastnaras", ItemClassification.progression, 50009, self.player, ItemType.BOSS_ITEM.value))
+        region_gerzuun.locations.append(gerzuun_boss)
 
         region_swinedimpels = Region("Swinedimpels Academy", self.player, self.multiworld)
         region_swinedimpels.add_locations(locations=self.location_helper.get_locations_for_group(region_swinedimpels.name), location_type=DQIXLocation)
         region_old_school = Region("Old School", self.player, self.multiworld)
         region_old_school.add_locations(locations=self.location_helper.get_locations_for_group(region_old_school.name), location_type=DQIXLocation)
-        region_old_school.add_event("Boss: Dreadmaster", "Defeated Dreadmaster")
+
+        old_school_boss = DQIXLocation(self.player, "Boss: Dreadmaster", 50010, region_old_school)
+        old_school_boss.place_locked_item(DQIXItem("Defeated Dreadmaster", ItemClassification.progression, 50010, self.player, ItemType.BOSS_ITEM.value))
+        region_old_school.locations.append(old_school_boss)
 
         region_wormwood_creek = Region("Wormwood Creek", self.player, self.multiworld)
         region_wormwood_creek.add_locations(locations=self.location_helper.get_locations_for_group(region_wormwood_creek.name), location_type=DQIXLocation)
         region_bowhole = Region("Bowhole", self.player, self.multiworld)
         region_bowhole.add_locations(locations=self.location_helper.get_locations_for_group(region_bowhole.name), location_type=DQIXLocation)
-        region_bowhole.add_event("Boss: Gadrongo", "Defeated Gadrongo")
+
+        bowhole_boss = DQIXLocation(self.player, "Boss: Gadrongo", 50011, region_bowhole)
+        bowhole_boss.place_locked_item(DQIXItem("Defeated Gadrongo", ItemClassification.progression, 50011, self.player, ItemType.BOSS_ITEM.value))
+        region_bowhole.locations.append(bowhole_boss)
 
         region_upover = Region("Upover", self.player, self.multiworld)
         region_upover.add_locations(locations=self.location_helper.get_locations_for_group(region_upover.name), location_type=DQIXLocation)
         region_magmaroo = Region("Magmaroo", self.player, self.multiworld)
         region_magmaroo.add_locations(locations=self.location_helper.get_locations_for_group(region_magmaroo.name), location_type=DQIXLocation)
-        region_magmaroo.add_event("Boss: Greygnarl", "Defeated Greygnarl")
+
+        magmaroo_boss = DQIXLocation(self.player, "Boss: Greygnarl", 50012, region_magmaroo)
+        magmaroo_boss.place_locked_item(DQIXItem("Defeated Greygnarl", ItemClassification.progression, 50012, self.player, ItemType.BOSS_ITEM.value))
+        region_magmaroo.locations.append(magmaroo_boss)
 
         region_goretress = Region("Goretress", self.player, self.multiworld)
         region_goretress.add_locations(locations=self.location_helper.get_locations_for_group(region_goretress.name), location_type=DQIXLocation)
-        region_goretress.add_event("Boss: Goreham-Hogg", "Defeated Goreham-Hogg")
+
+        goretress_boss = DQIXLocation(self.player, "Boss: Goreham-Hogg", 50013, region_goretress)
+        goretress_boss.place_locked_item(DQIXItem("Defeated Goreham-Hogg", ItemClassification.progression, 50013, self.player, ItemType.BOSS_ITEM.value))
+        region_goretress.locations.append(goretress_boss)
 
         region_gittingham_palace = Region("Gittingham Palace", self.player, self.multiworld)
         region_gittingham_palace.add_locations(locations=self.location_helper.get_locations_for_group(region_gittingham_palace.name), location_type=DQIXLocation)
-        region_gittingham_palace.add_event("Boss: Hootingham-Gore", "Defeated Hootingham-Gore")
-        region_gittingham_palace.add_event("Boss: Goresby-Purrvis", "Defeated Goresby-Purrvis")
+
+        gittingham_palace_boss = DQIXLocation(self.player, "Boss: Hootingham-Gore", 50014, region_gittingham_palace)
+        gittingham_palace_boss.place_locked_item(DQIXItem("Defeated Hootingham-Gore", ItemClassification.progression, 50014, self.player, ItemType.BOSS_ITEM.value))
+        region_gittingham_palace.locations.append(gittingham_palace_boss)
+
+        gittingham_palace_boss = DQIXLocation(self.player, "Boss: Goresby-Purrvis", 50015, region_gittingham_palace)
+        gittingham_palace_boss.place_locked_item(DQIXItem("Defeated Goresby-Purrvis", ItemClassification.progression, 50015, self.player, ItemType.BOSS_ITEM.value))
+        region_gittingham_palace.locations.append(gittingham_palace_boss)
         region_oubliette = Region("Oubliette", self.player, self.multiworld)
         region_oubliette.add_locations(locations=self.location_helper.get_locations_for_group(region_oubliette.name), location_type=DQIXLocation)
 
         region_realm_of_the_mighty = Region("Realm of the Mighty", self.player, self.multiworld)
         region_realm_of_the_mighty.add_locations(locations=self.location_helper.get_locations_for_group(region_realm_of_the_mighty.name), location_type=DQIXLocation)
-        region_realm_of_the_mighty.add_event("Boss: Corvus (I)", "Defeated Corvus (I)")
-        region_realm_of_the_mighty.add_event("Boss: Barbarus", "Defeated Barbarus")
-        region_realm_of_the_mighty.add_event("Boss: Corvus (II)", "Defeated Corvus (II)")
+
+        realm_of_the_mighty_boss = DQIXLocation(self.player, "Boss: Corvus (I)", 50016, region_realm_of_the_mighty)
+        realm_of_the_mighty_boss.place_locked_item(DQIXItem("Defeated Corvus (I)", ItemClassification.progression, 50016, self.player, ItemType.BOSS_ITEM.value))
+        region_realm_of_the_mighty.locations.append(realm_of_the_mighty_boss)
+
+        realm_of_the_mighty_boss = DQIXLocation(self.player, "Boss: Barbarus", 50017, region_realm_of_the_mighty)
+        realm_of_the_mighty_boss.place_locked_item(DQIXItem("Defeated Barbarus", ItemClassification.progression, 50017, self.player, ItemType.BOSS_ITEM.value))
+        region_realm_of_the_mighty.locations.append(realm_of_the_mighty_boss)
+
+        realm_of_the_mighty_boss = DQIXLocation(self.player, "Boss: Corvus (II)", 50018, region_realm_of_the_mighty)
+        realm_of_the_mighty_boss.place_locked_item(DQIXItem("Defeated Corvus (II)", ItemClassification.progression, 50018, self.player, ItemType.BOSS_ITEM.value))
+        region_realm_of_the_mighty.locations.append(realm_of_the_mighty_boss)
+
+        # Connecting all the regions
 
         region_angel_falls.connect(connecting_region=region_hexagon)
         region_angel_falls.connect(connecting_region=region_stornway, rule=lambda state: state.has(item="Defeated Hexagoon", player=self.player, count=1))
@@ -239,7 +299,8 @@ class DragonQuestIX(World):
         region_goretress.connect(connecting_region=region_gittingham_palace, rule=lambda state: state.has(item="Defeated Goreham-Hogg", player=self.player, count=1))
 
         region_gittingham_palace.connect(connecting_region=region_oubliette)
-        region_oubliette.connect(connecting_region=region_realm_of_the_mighty, rule=lambda state: state.has(item="Defeated Hootingham-Gore", player=self.player, count=1) and state.has(item="Defeated Goresby-Purrvis", player=self.player, count=1))
+        region_oubliette.connect(connecting_region=region_realm_of_the_mighty,
+                                 rule=lambda state: state.has(item="Defeated Hootingham-Gore", player=self.player, count=1) and state.has(item="Defeated Goresby-Purrvis", player=self.player, count=1))
 
         self.multiworld.regions.append(region_angel_falls)
         self.multiworld.regions.append(region_hexagon)
@@ -277,9 +338,10 @@ class DragonQuestIX(World):
 
         self.multiworld.completion_condition[self.player] = lambda state: state.has("Defeated Corvus (II)", self.player)
 
-        # state = self.multiworld.get_all_state(False)
-        # state.update_reachable_regions(self.player)
-        # visualize_regions(self.get_region(self.origin_region_name), "my_world.puml", show_entrance_names=True, regions_to_highlight=state.reachable_regions[self.player])
+        state = self.multiworld.get_all_state(use_cache=False, allow_partial_entrances=True)
+        state.update_reachable_regions(self.player)
+        visualize_regions(root_region=self.multiworld.get_region(self.origin_region_name, self.player), file_name="my_world.puml", show_entrance_names=True,
+                          regions_to_highlight=state.reachable_regions[self.player])
 
     def get_filler_item_name(self) -> str:
         return self.random.choice(self.item_helper.get_filler_item_names())

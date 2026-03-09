@@ -34,6 +34,8 @@ class InventoryHelper(BaseHelper):
             return ItemType.GOLD
         elif 100010 <= item_id < 100020:
             return ItemType.EXPERIENCE
+        elif 50000 <= item_id < 50020:
+            return ItemType.BOSS_ITEM
         return None
 
     @staticmethod
@@ -72,6 +74,8 @@ class InventoryHelper(BaseHelper):
                                             segment_count=DQIXConstants.COMMON_ITEMS_SEGMENTS, item_id=item_id)
             case ItemType.EQUIPMENT:
                 await self.grant_equipment(item_id=item_id)
+            case ItemType.BOSS_ITEM:
+                await self.grant_boss_item(item_id=item_id)
             case None:
                 self.warning("Uh-oh, could not determine the item type for item with ID = {0}. This should not happen, please report this error to the author.".format(item_id))
 
@@ -137,6 +141,10 @@ class InventoryHelper(BaseHelper):
                 await self.give_player_item(DQIXConstants.ACCESSORIES_TYPE_OFFSET, DQIXConstants.ACCESSORIES_COUNTS_OFFSET, DQIXConstants.ACCESSORIES_SEGMENTS, item_id)
             case None:
                 self.warning("Uh-oh, could not determine the equipment type for equipment with ID = {0}. This should not happen, please report this error to the author.".format(item_id))
+
+    async def grant_boss_item(self, item_id: int):
+        # TODO Just grant item, no big logic otherwise than to mark the Item as handed out
+        pass
 
     async def give_player_item(self, item_offset: int, amount_offset: int, segment_count: int, item_id: int):
         item_inventory = await self.read_segments_as_ints_from_ram(item_offset, segment_count, DQIXConstants.ITEM_TYPE_SIZE)

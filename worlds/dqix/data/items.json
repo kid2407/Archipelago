@@ -4440,5 +4440,87 @@
       "code": 100013,
       "item_type": "exp"
     }
+  },
+  "bosses": {
+    "Defeated Hexagoon": {
+      "code": 50000,
+      "item_type": "boss"
+    },
+    "Defeated Wight Knight": {
+      "code": 50001,
+      "item_type": "boss"
+    },
+    "Defeated Morag": {
+      "code": 50002,
+      "item_type": "boss"
+    },
+    "Defeated Ragin' Contagion": {
+      "code": 50003,
+      "item_type": "boss"
+    },
+    "Defeated Master of Nu'un": {
+      "code": 50004,
+      "item_type": "boss"
+    },
+    "Defeated Lleviathan": {
+      "code": 50005,
+      "item_type": "boss"
+    },
+    "Defeated Garth Goyle": {
+      "code": 50006,
+      "item_type": "boss"
+    },
+    "Defeated Tyrantula": {
+      "code": 50007,
+      "item_type": "boss"
+    },
+    "Defeated Grand Lizzier": {
+      "code": 50008,
+      "item_type": "boss"
+    },
+    "Defeated Larstastnaras": {
+      "code": 50009,
+      "item_type": "boss"
+    },
+    "Defeated Dreadmaster": {
+      "code": 50010,
+      "item_type": "boss"
+    },
+    "Defeated Gadrongo": {
+      "code": 50011,
+      "item_type": "boss"
+    },
+    "Defeated Greygnarl": {
+      "code": 50012,
+      "item_type": "boss"
+    },
+    "Defeated Goreham-Hogg": {
+      "code": 50013,
+      "item_type": "boss"
+    },
+    "Defeated Hootingham-Gore": {
+      "code": 50014,
+      "item_type": "boss"
+    },
+    "Defeated Goresby-Purrvis": {
+      "code": 50015,
+      "item_type": "boss"
+    },
+    "Defeated King Godwyn": {
+      "code": 50016,
+      "item_type": "boss"
+    },
+    "Defeated Corvus (I)": {
+      "code": 50017,
+      "item_type": "boss"
+    },
+    "Defeated Barbarus": {
+      "code": 50018,
+      "item_type": "boss"
+    },
+    "Defeated Corvus (II)": {
+      "code": 50019,
+      "item_type": "boss"
+    }
   }
 }

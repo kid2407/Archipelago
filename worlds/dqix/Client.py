@@ -1,11 +1,8 @@
-import json
-import logging
 from typing import TYPE_CHECKING, Optional
 
 import worlds._bizhawk as bizhawk
 from NetUtils import NetworkItem, ClientStatus
 from worlds._bizhawk.client import BizHawkClient
-from worlds.dqix import Locations
 from worlds.dqix.Constants import DQIXConstants
 from worlds.dqix.helper.BaseHelper import BaseHelper
 from worlds.dqix.helper.BestiaryHelper import BestiaryHelper
@@ -56,7 +53,7 @@ class DQIXClient(BizHawkClient):
             if self.base_helper is None:
                 self.base_helper = BaseHelper(ctx)
 
-            if await self.is_ready_and_in_game(ctx):
+            if await self.is_ready_and_in_game():
                 await bizhawk.set_message_interval(ctx=ctx.bizhawk_ctx, value=5)
 
                 if self.next_expected_item_index is None:
@@ -80,13 +77,10 @@ class DQIXClient(BizHawkClient):
             # The connector didn't respond. Exit handler and return to main loop to reconnect
             pass
 
-    @staticmethod
-    async def is_ready_and_in_game(ctx: "BizHawkClientContext") -> bool:
-        base_helper = BaseHelper(ctx=ctx)
-
-        is_in_game = await base_helper.read_int_from_ram(address=DQIXConstants.IN_GAME, size=1) == 0
-        is_in_battle = await base_helper.read_int_from_ram(address=DQIXConstants.IN_BATTLE, size=1) == 0
-        has_char_name = await base_helper.read_int_from_ram(address=DQIXConstants.HERO_NAME_START, size=1) != 0
+    async def is_ready_and_in_game(self) -> bool:
+        is_in_game = await self.base_helper.read_int_from_ram(address=DQIXConstants.IN_GAME, size=1) == 0
+        is_in_battle = await self.base_helper.read_int_from_ram(address=DQIXConstants.IN_BATTLE, size=1) == 0
+        has_char_name = await self.base_helper.read_int_from_ram(address=DQIXConstants.HERO_NAME_START, size=1) != 0
 
         result = is_in_game and has_char_name and not is_in_battle
         if not result:
@@ -101,7 +95,7 @@ class DQIXClient(BizHawkClient):
 
     async def location_check(self, ctx: "BizHawkClientContext"):
         BaseHelper.debug("Begin: Checking Locations")
-        current_location = int.from_bytes((await bizhawk.read(ctx.bizhawk_ctx, [(DQIXConstants.CURRENT_MAP, 2, "Main RAM")]))[0], "little")
+        current_location = await self.base_helper.read_int_from_ram(address=DQIXConstants.CURRENT_MAP, size=2)
         if current_location not in self.visited_locations:
             await ctx.check_locations([current_location])
         BaseHelper.debug("End: Checking Locations")
