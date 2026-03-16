@@ -357,5 +357,27 @@
     "Observatory (after attack) L1": 4505,
     "Observatory (after attack) L2": 4507,
     "Observatory (after attack) L3 (interior)": 4509
+  },
+  "Bosses": {
+    "Boss: Hexagoon": 50000,
+    "Boss: Wight Knight": 50001,
+    "Boss: Morag": 50002,
+    "Boss: Ragin' Contagion": 50003,
+    "Boss: Master of Nu'un": 50004,
+    "Boss: Lleviathan": 50005,
+    "Boss: Garth Goyle": 50006,
+    "Boss: Tyrantula": 50007,
+    "Boss: Grand Lizzier": 50008,
+    "Boss: Larstastnaras": 50009,
+    "Boss: Dreadmaster": 50010,
+    "Boss: Gadrongo": 50011,
+    "Boss: Greygnarl": 50012,
+    "Boss: Goreham-Hogg": 50013,
+    "Boss: Hootingham-Gore": 50014,
+    "Boss: Goresby-Purrvis": 50015,
+    "Boss: King Godwyn": 50016,
+    "Boss: Corvus (I)": 50017,
+    "Boss: Barbarus": 50018,
+    "Boss: Corvus (II)": 50019
   }
 }
