@@ -34,13 +34,11 @@ class DQIXItems:
         self.progression_items = {name: ItemData(name, item_data["code"], ItemType(item_data["item_type"]), ItemClassification.progression) for name, item_data in loaded_items["progression"].items()}
         self.useful_items = {name: ItemData(name, item_data["code"], ItemType(item_data["item_type"]), ItemClassification.useful) for name, item_data in loaded_items["useful"].items()}
         self.filler_items = {name: ItemData(name, item_data["code"], ItemType(item_data["item_type"]), ItemClassification.filler) for name, item_data in loaded_items["filler"].items()}
-        self.boss_items = {name: ItemData(name, item_data["code"], ItemType(item_data["item_type"]), ItemClassification.skip_balancing) for name, item_data in loaded_items["bosses"].items()}
 
         final_item_table = {}
         final_item_table.update(self.progression_items)
         final_item_table.update(self.useful_items)
         final_item_table.update(self.filler_items)
-        final_item_table.update(self.boss_items)
 
         self._item_table = final_item_table
 

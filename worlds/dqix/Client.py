@@ -88,6 +88,9 @@ class DQIXClient(BizHawkClient):
             BaseHelper.debug("-- is_in_game = " + str(is_in_game))
             BaseHelper.debug("-- is_in_battle = " + str(is_in_battle))
             BaseHelper.debug("-- has_char_name = " + str(has_char_name))
+
+            if is_in_game and has_char_name and is_in_battle:
+                await self.punish_player()
         else:
             BaseHelper.debug("Game is currently ready and runs")
 
@@ -130,3 +133,23 @@ class DQIXClient(BizHawkClient):
             await ctx.send_msgs([{"cmd": "StatusUpdate", "status": ClientStatus.CLIENT_GOAL}])
             ctx.finished_game = True
         BaseHelper.debug("End: Checking Bestiary")
+
+    async def punish_player(self):
+        BaseHelper.debug("Punishing!!!!!!!!!!!!!!!")
+
+        char_1_hp = await self.base_helper.read_int_from_ram(DQIXConstants.CHAR_1_BATTLE_HP, 2)
+        char_2_hp = await self.base_helper.read_int_from_ram(DQIXConstants.CHAR_2_BATTLE_HP, 2)
+        char_3_hp = await self.base_helper.read_int_from_ram(DQIXConstants.CHAR_3_BATTLE_HP, 2)
+        char_4_hp = await self.base_helper.read_int_from_ram(DQIXConstants.CHAR_4_BATTLE_HP, 2)
+
+        if char_1_hp > 1:
+            await self.base_helper.write_int_to_ram(DQIXConstants.CHAR_1_BATTLE_HP, 2, 1)
+
+        if char_2_hp > 1:
+            await self.base_helper.write_int_to_ram(DQIXConstants.CHAR_2_BATTLE_HP, 2, 1)
+
+        if char_3_hp > 1:
+            await self.base_helper.write_int_to_ram(DQIXConstants.CHAR_3_BATTLE_HP, 2, 1)
+
+        if char_4_hp > 1:
+            await self.base_helper.write_int_to_ram(DQIXConstants.CHAR_4_BATTLE_HP, 2, 1)
