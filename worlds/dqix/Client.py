@@ -19,6 +19,7 @@ class DQIXClient(BizHawkClient):
     next_expected_item_index = None
 
     def __init__(self):
+        self.FORBIDDEN_MONSTERS = []
         self.syncing = False
         self.base_helper = None
         self.current_money = None
@@ -135,21 +136,20 @@ class DQIXClient(BizHawkClient):
         BaseHelper.debug("End: Checking Bestiary")
 
     async def punish_player(self):
-        BaseHelper.debug("Punishing!!!!!!!!!!!!!!!")
+        current_monster = await self.base_helper.read_int_from_ram(DQIXConstants.CURRENT_MONSTER, 2)
+        if current_monster in self.FORBIDDEN_MONSTERS:
+            BaseHelper.debug("Punishing for fighting monster with ID = " + str(current_monster))
+            for char_hp_address in [DQIXConstants.CHAR_1_BATTLE_HP, DQIXConstants.CHAR_2_BATTLE_HP, DQIXConstants.CHAR_3_BATTLE_HP, DQIXConstants.CHAR_4_BATTLE_HP]:
+                char_hp = await self.base_helper.read_int_from_ram(char_hp_address, 2)
+                if char_hp > 1:
+                    await self.base_helper.write_int_to_ram(char_hp_address, 2, 1)
+                    await self.base_helper.write_int_to_ram(char_hp_address + 2, 2, 1)
 
-        char_1_hp = await self.base_helper.read_int_from_ram(DQIXConstants.CHAR_1_BATTLE_HP, 2)
-        char_2_hp = await self.base_helper.read_int_from_ram(DQIXConstants.CHAR_2_BATTLE_HP, 2)
-        char_3_hp = await self.base_helper.read_int_from_ram(DQIXConstants.CHAR_3_BATTLE_HP, 2)
-        char_4_hp = await self.base_helper.read_int_from_ram(DQIXConstants.CHAR_4_BATTLE_HP, 2)
+            for char_mp_address in [DQIXConstants.CHAR_1_BATTLE_MP, DQIXConstants.CHAR_2_BATTLE_MP, DQIXConstants.CHAR_3_BATTLE_MP, DQIXConstants.CHAR_4_BATTLE_MP]:
+                char_mp = await self.base_helper.read_int_from_ram(char_mp_address, 2)
+                if char_mp > 0:
+                    await self.base_helper.write_int_to_ram(char_mp_address, 2, 0)
+                    await self.base_helper.write_int_to_ram(char_mp_address + 2, 2, 0)
 
-        if char_1_hp > 1:
-            await self.base_helper.write_int_to_ram(DQIXConstants.CHAR_1_BATTLE_HP, 2, 1)
-
-        if char_2_hp > 1:
-            await self.base_helper.write_int_to_ram(DQIXConstants.CHAR_2_BATTLE_HP, 2, 1)
-
-        if char_3_hp > 1:
-            await self.base_helper.write_int_to_ram(DQIXConstants.CHAR_3_BATTLE_HP, 2, 1)
-
-        if char_4_hp > 1:
-            await self.base_helper.write_int_to_ram(DQIXConstants.CHAR_4_BATTLE_HP, 2, 1)
+            for char_status_address in [DQIXConstants.CHAR_1_BATTLE_STATUS, DQIXConstants.CHAR_2_BATTLE_STATUS, DQIXConstants.CHAR_3_BATTLE_STATUS, DQIXConstants.CHAR_4_BATTLE_STATUS]:
+                await self.base_helper.write_int_to_ram(char_status_address, 1, 2)
