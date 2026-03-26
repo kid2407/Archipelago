@@ -14,7 +14,7 @@ class BaseHelper:
     def __init__(self, ctx: "BizHawkClientContext"):
         self.ctx = ctx
 
-    async def read_int_from_ram(self, address: int | str, size: int):
+    async def read_int_from_ram(self, address: int | str, size: int) -> int:
         address = int(address, 16) if isinstance(address, str) else address
         return int.from_bytes((await bizhawk.read(ctx=self.ctx.bizhawk_ctx, read_list=[(address, size, "Main RAM")]))[0], "little")
 

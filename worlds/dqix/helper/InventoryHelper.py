@@ -4,6 +4,7 @@ from typing import TYPE_CHECKING
 from worlds.dqix.Constants import DQIXConstants
 from worlds.dqix.Items import ItemType, DQIXItems
 from worlds.dqix.helper.BaseHelper import BaseHelper
+from worlds.dqix.helper.BestiaryHelper import BestiaryHelper
 
 if TYPE_CHECKING:
     from worlds._bizhawk.context import BizHawkClientContext
@@ -21,8 +22,9 @@ class EquipmentType(Enum):
 
 
 class InventoryHelper(BaseHelper):
-    def __init__(self, ctx: "BizHawkClientContext"):
+    def __init__(self, ctx: "BizHawkClientContext", dqix_client):
         super().__init__(ctx)
+        self.dqix_client = dqix_client
 
     @staticmethod
     def determine_item_type(item_id: int):
@@ -143,8 +145,9 @@ class InventoryHelper(BaseHelper):
                 self.warning("Uh-oh, could not determine the equipment type for equipment with ID = {0}. This should not happen, please report this error to the author.".format(item_id))
 
     async def grant_boss_item(self, item_id: int):
-        # TODO Just grant item, no big logic otherwise than to mark the Item as handed out
-        pass
+        monster_id = BestiaryHelper.BOSS_KEYS_TO_MONSTER_ID[item_id]
+        self.debug("Removing Boss (from normal receive) with monster ID: " + str(monster_id))
+        self.dqix_client.forbidden_monsters.remove(monster_id)
 
     async def give_player_item(self, item_offset: int, amount_offset: int, segment_count: int, item_id: int):
         item_inventory = await self.read_segments_as_ints_from_ram(item_offset, segment_count, DQIXConstants.ITEM_TYPE_SIZE)

@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING, Optional
+from typing import TYPE_CHECKING, Optional, List
 
 import worlds._bizhawk as bizhawk
 from NetUtils import NetworkItem, ClientStatus
@@ -19,9 +19,10 @@ class DQIXClient(BizHawkClient):
     next_expected_item_index = None
 
     def __init__(self):
-        self.FORBIDDEN_MONSTERS = []
+        self.boss_list_updated = False
+        self.forbidden_monsters = BestiaryHelper.STARTING_FORBIDDEN_MONSTERS
         self.syncing = False
-        self.base_helper = None
+        self.base_helper: Optional[BaseHelper] = None
         self.current_money = None
         self.visited_locations = []
         self.printed_boss_stats = False
@@ -107,7 +108,7 @@ class DQIXClient(BizHawkClient):
     async def received_items_check(self, ctx: "BizHawkClientContext"):
         BaseHelper.debug("Begin: Checking Received Items")
         network_item: NetworkItem
-        inventory_helper = InventoryHelper(ctx=ctx)
+        inventory_helper = InventoryHelper(ctx=ctx,dqix_client=self)
         for index, network_item in enumerate(ctx.items_received):
             if index == self.next_expected_item_index:
                 if ctx.slot == network_item.player:
@@ -123,6 +124,9 @@ class DQIXClient(BizHawkClient):
             elif index > self.next_expected_item_index:
                 self.syncing = True
         BaseHelper.debug("End: Checking Received Items")
+        if not self.boss_list_updated:
+            self.update_boss_list(ctx.items_received)
+            self.boss_list_updated = True
 
     @staticmethod
     async def bestiary_check(ctx: "BizHawkClientContext"):
@@ -137,7 +141,8 @@ class DQIXClient(BizHawkClient):
 
     async def punish_player(self):
         current_monster = await self.base_helper.read_int_from_ram(DQIXConstants.CURRENT_MONSTER, 2)
-        if current_monster in self.FORBIDDEN_MONSTERS:
+
+        if current_monster in self.forbidden_monsters:
             BaseHelper.debug("Punishing for fighting monster with ID = " + str(current_monster))
             for char_hp_address in [DQIXConstants.CHAR_1_BATTLE_HP, DQIXConstants.CHAR_2_BATTLE_HP, DQIXConstants.CHAR_3_BATTLE_HP, DQIXConstants.CHAR_4_BATTLE_HP]:
                 char_hp = await self.base_helper.read_int_from_ram(char_hp_address, 2)
@@ -153,3 +158,10 @@ class DQIXClient(BizHawkClient):
 
             for char_status_address in [DQIXConstants.CHAR_1_BATTLE_STATUS, DQIXConstants.CHAR_2_BATTLE_STATUS, DQIXConstants.CHAR_3_BATTLE_STATUS, DQIXConstants.CHAR_4_BATTLE_STATUS]:
                 await self.base_helper.write_int_to_ram(char_status_address, 1, 2)
+
+    def update_boss_list(self, items_received: List[NetworkItem]):
+        for _, network_item in enumerate(items_received):
+            if 50000 <= network_item.item <= 50022:
+                monster_id = BestiaryHelper.BOSS_KEYS_TO_MONSTER_ID[network_item.item]
+                self.base_helper.debug("Removing Boss with monster ID: " + str(monster_id))
+                self.forbidden_monsters.remove(monster_id)
