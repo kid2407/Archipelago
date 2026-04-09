@@ -76,7 +76,7 @@ class BestiaryHelper(BaseHelper):
         50022: 320,
     }
 
-    STARTING_FORBIDDEN_MONSTERS = [1, 2, 300, 301, 302, 303, 304, 305, 306, 307, 308, 309, 310, 311, 312, 313, 314, 315, 317, 344, 345, 346, 318, 319, 320]
+    STARTING_FORBIDDEN_MONSTERS = [300, 301, 302, 303, 304, 305, 306, 307, 308, 309, 310, 311, 312, 313, 314, 315, 317, 344, 345, 346, 318, 319, 320]
 
     def __init__(self, ctx: "BizHawkClientContext"):
         super().__init__(ctx)
