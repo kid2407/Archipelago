@@ -1,9 +1,18 @@
 import json
 import pkgutil
 from enum import Enum
-from typing import Dict, NamedTuple
+from typing import Dict, NamedTuple, Optional
 
-from BaseClasses import ItemClassification
+from BaseClasses import ItemClassification, Item
+
+
+class DQIXItem(Item):
+    game = "Dragon Quest IX"
+    item_type: str
+
+    def __init__(self, name: str, classification: ItemClassification, code: Optional[int], player: int, item_type: str):
+        super(DQIXItem, self).__init__(name, classification, code, player)
+        self.item_type = item_type
 
 
 class ItemType(Enum):

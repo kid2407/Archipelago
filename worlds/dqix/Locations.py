@@ -1,6 +1,12 @@
 import json
 import pkgutil
-from typing import Dict
+from typing import Dict, Union
+
+from BaseClasses import Location
+
+
+class DQIXLocation(Location):
+    game = "Dragon Quest IX"
 
 
 class DQIXLocations:
@@ -20,5 +26,5 @@ class DQIXLocations:
     def get_locations(self):
         return {k: v for sub_dict in self._get_location_table().values() for k, v in sub_dict.items()}
 
-    def get_locations_for_group(self, group_name:str):
+    def get_locations_for_group(self, group_name: str):
         return self._get_location_table()[group_name]
