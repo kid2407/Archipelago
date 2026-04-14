@@ -62,7 +62,7 @@ class DragonQuestIX(World):
             self.multiworld.regions.append(region)
 
         # Goal condition
-        self.multiworld.completion_condition[self.player] = lambda current_state: current_state.has("Defeated Corvus (II)", self.player)
+        self.set_completion_rule(Has("Defeated Corvus (II)"))
 
         state = self.multiworld.get_all_state(use_cache=False, allow_partial_entrances=True)
         state.update_reachable_regions(self.player)
