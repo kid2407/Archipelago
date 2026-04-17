@@ -108,7 +108,7 @@ class DQIXClient(BizHawkClient):
     async def received_items_check(self, ctx: "BizHawkClientContext"):
         BaseHelper.debug("Begin: Checking Received Items")
         network_item: NetworkItem
-        inventory_helper = InventoryHelper(ctx=ctx,dqix_client=self)
+        inventory_helper = InventoryHelper(ctx=ctx, dqix_client=self)
         for index, network_item in enumerate(ctx.items_received):
             if index == self.next_expected_item_index:
                 if ctx.slot == network_item.player:
@@ -157,7 +157,10 @@ class DQIXClient(BizHawkClient):
                     await self.base_helper.write_int_to_ram(char_mp_address + 2, 2, 0)
 
             for char_status_address in [DQIXConstants.CHAR_1_BATTLE_STATUS, DQIXConstants.CHAR_2_BATTLE_STATUS, DQIXConstants.CHAR_3_BATTLE_STATUS, DQIXConstants.CHAR_4_BATTLE_STATUS]:
-                await self.base_helper.write_int_to_ram(char_status_address, 1, 2)
+                char_status = await self.base_helper.read_int_from_ram(char_status_address, 1)
+                # If not already dead
+                if char_status != 1:
+                    await self.base_helper.write_int_to_ram(char_status_address, 1, 2)
 
     def update_boss_list(self, items_received: List[NetworkItem]):
         for _, network_item in enumerate(items_received):

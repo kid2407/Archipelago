@@ -1,9 +1,11 @@
 from BaseClasses import Tutorial, ItemClassification, Region
+from Options import OptionError
 from Utils import visualize_regions
 from rule_builder.rules import Has, HasAll, Rule, HasAny
 from .Client import DQIXClient
 from .Items import DQIXItems, ItemType, DQIXItem
 from .Locations import DQIXLocations, DQIXLocation
+from .Options import DQIXOptions, EndBoss
 from .helper.BaseHelper import BaseHelper
 from ..AutoWorld import World, WebWorld
 
@@ -35,6 +37,9 @@ class DragonQuestIX(World):
     location_name_to_id = location_helper.get_locations()
     item_name_to_id = item_helper.get_items()
 
+    options_dataclass = DQIXOptions
+    options: DQIXOptions
+
     def create_item(self, name: str) -> "DQIXItem":
         return DQIXItem(name,
                         ItemClassification.progression if self.item_helper.is_progression(name) else ItemClassification.useful if self.item_helper.is_useful(name) else ItemClassification.filler,
@@ -49,7 +54,8 @@ class DragonQuestIX(World):
         items = [self.create_item(name) for name in progression_item_names]
 
         # Fill up to 90% of the remaining item slots with useful items
-        remaining_count_until_almost_full = (round(len(self.location_name_to_id) * 0.9) - len(items))
+        useful_factor = round((100 - self.options.filler_amount.value) / 100, 2)
+        remaining_count_until_almost_full = (round(len(self.location_name_to_id) * useful_factor) - len(items))
         items += [self.create_item(useful_item) for useful_item in self.random.choices(population=list(self.item_helper.useful_items.keys()), k=remaining_count_until_almost_full)]
 
         # remaining 10% are filler, money and gold
@@ -223,7 +229,15 @@ class DragonQuestIX(World):
         return self.random.choice(self.item_helper.get_filler_item_names())
 
     def get_completion_condition(self) -> Rule:
-        return Has("Defeated Corvus (II)")
+        match self.options.end_boss.value:
+            case EndBoss.option_master_of_nuun:
+                return Has("Defeated Master of Nu'un")
+            case EndBoss.option_gregnarl:
+                return Has("Defeated Greygnarl")
+            case EndBoss.option_corvus:
+                return Has("Defeated Corvus (II)")
+
+        raise OptionError(f"Invalid option for `target_boss`: " + str(self.options.end_boss.value))
 
     def apply_special_rules(self) -> None:
         self.set_rule(spot=self.get_location("The Plumbed Depths - B1 (dungeon)"), rule=HasAny("Ultimate Key", "Magic Key"))
