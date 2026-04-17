@@ -1,5 +1,17 @@
 {
   "progression": {
+    "Thief's Key": {
+      "code": 22042,
+      "item_type": "important"
+    },
+    "Magic Key": {
+      "code": 22043,
+      "item_type": "important"
+    },
+    "Ultimate Key": {
+      "code": 22044,
+      "item_type": "important"
+    },
     "Boss Key: Hexagoon": {
       "code": 50000,
       "item_type": "boss"
