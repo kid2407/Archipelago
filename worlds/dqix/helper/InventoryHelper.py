@@ -36,7 +36,7 @@ class InventoryHelper(BaseHelper):
             return ItemType.GOLD
         elif 100010 <= item_id < 100020:
             return ItemType.EXPERIENCE
-        elif 50000 <= item_id < 50020:
+        elif 50000 <= item_id <= 50022:
             return ItemType.BOSS_ITEM
         return None
 
@@ -147,7 +147,8 @@ class InventoryHelper(BaseHelper):
     async def grant_boss_item(self, item_id: int):
         monster_id = BestiaryHelper.BOSS_KEYS_TO_MONSTER_ID[item_id]
         self.debug("Removing Boss (from normal receive) with monster ID: " + str(monster_id))
-        self.dqix_client.forbidden_monsters.remove(monster_id)
+        if monster_id in self.dqix_client.forbidden_monsters:
+            self.dqix_client.forbidden_monsters.remove(monster_id)
 
     async def give_player_item(self, item_offset: int, amount_offset: int, segment_count: int, item_id: int):
         item_inventory = await self.read_segments_as_ints_from_ram(item_offset, segment_count, DQIXConstants.ITEM_TYPE_SIZE)

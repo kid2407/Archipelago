@@ -133,8 +133,17 @@ class DQIXClient(BizHawkClient):
         BaseHelper.debug("Begin: Checking Bestiary")
         bestiary_helper = BestiaryHelper(ctx=ctx)
 
-        final_boss_data = await bestiary_helper.get_monster_data(BestiaryHelper.BOSSES.get("Corvus (II)"))
-        if not ctx.finished_game and final_boss_data.has_defeated_monster():
+        target_boss_option = ctx.slot_data["end_boss"]
+        match target_boss_option:
+            case 0:
+                final_boss_data = await bestiary_helper.get_monster_data(BestiaryHelper.BOSSES.get("Master of Nu'un"))
+            case 1:
+                final_boss_data = await bestiary_helper.get_monster_data(BestiaryHelper.BOSSES.get("Greygnarl"))
+            case 2:
+                final_boss_data = await bestiary_helper.get_monster_data(BestiaryHelper.BOSSES.get("Corvus (II)"))
+            case _:
+                final_boss_data = None
+        if not ctx.finished_game and final_boss_data is not None and final_boss_data.has_defeated_monster():
             await ctx.send_msgs([{"cmd": "StatusUpdate", "status": ClientStatus.CLIENT_GOAL}])
             ctx.finished_game = True
         BaseHelper.debug("End: Checking Bestiary")
@@ -167,4 +176,5 @@ class DQIXClient(BizHawkClient):
             if 50000 <= network_item.item <= 50022:
                 monster_id = BestiaryHelper.BOSS_KEYS_TO_MONSTER_ID[network_item.item]
                 self.base_helper.debug("Removing Boss with monster ID: " + str(monster_id))
-                self.forbidden_monsters.remove(monster_id)
+                if monster_id in self.forbidden_monsters:
+                    self.forbidden_monsters.remove(monster_id)

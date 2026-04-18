@@ -4,11 +4,12 @@ from Options import Choice, PerGameCommonOptions, Range
 
 
 class EndBoss(Choice):
-    """Determines which Boss needs to be defeated to goal the game"""
+    """Determines which Boss needs to be defeated to finish the game"""
     display_name = "Game Goal"
+    auto_display_name = True
 
     option_master_of_nuun = 0
-    option_gregnarl = 1
+    option_greygnarl = 1
     option_corvus = 2
 
     default = option_corvus
