@@ -1,6 +1,6 @@
 import json
 import pkgutil
-from typing import Dict, Union
+from typing import Dict
 
 from BaseClasses import Location
 
