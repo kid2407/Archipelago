@@ -264,6 +264,8 @@ class DragonQuestIX(World):
         raise OptionError(f"Invalid option for `target_boss`: " + str(self.options.end_boss.value))
 
     def apply_special_rules(self) -> None:
+        self.set_rule(spot=self.get_location("Stornway Castle - Treasury"), rule=Has("Defeated Morag"))
+
         if self.options.end_boss in [EndBoss.option_greygnarl, EndBoss.option_corvus]:
             self.set_rule(spot=self.get_location("Dourbridge - secret shop"), rule=Has("Ultimate Key"))
             self.set_rule(spot=self.get_location("The Plumbed Depths - B1 (dungeon)"), rule=HasAny("Ultimate Key", "Magic Key"))
