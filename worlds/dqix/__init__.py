@@ -51,17 +51,18 @@ class DragonQuestIX(World):
                         )
 
     def create_items(self) -> None:
+        total_location_count = len(self.multiworld.get_unfilled_locations(self.player))
         # Generate / Load all progression items
         progression_item_names = {k for k in self.item_name_to_id.keys() if self.item_helper.is_progression(k)}
         items = [self.create_item(name) for name in progression_item_names]
 
-        # Fill up to 90% of the remaining item slots with useful items
+        # Fill up to X% of the remaining item slots with useful items
         useful_factor = round((100 - self.options.filler_amount.value) / 100, 2)
-        remaining_count_until_almost_full = (round(len(self.location_name_to_id) * useful_factor) - len(items))
-        items += [self.create_item(useful_item) for useful_item in self.random.choices(population=list(self.item_helper.useful_items.keys()), k=remaining_count_until_almost_full)]
+        useful_items_count = round((total_location_count - len(items)) * useful_factor)
+        items += [self.create_item(useful_item) for useful_item in self.random.choices(population=list(self.item_helper.useful_items.keys()), k=useful_items_count)]
 
-        # remaining 10% are filler, money and gold
-        items += [self.create_item(self.get_filler_item_name()) for _ in range(len(self.location_name_to_id) - len(items))]
+        # remaining items are filler, atm money and gold
+        items += [self.create_item(self.get_filler_item_name()) for _ in range(total_location_count - len(items))]
 
         self.multiworld.itempool += items
 
