@@ -29,7 +29,7 @@ class DragonQuestIXWeb(WebWorld):
 
 class DragonQuestIX(World):
     game = "Dragon Quest IX"
-    required_client_version = (0, 6, 3)
+    required_client_version = (0, 6, 7)
     origin_region_name = "Angel Falls"
     web = DragonQuestIXWeb()
 
