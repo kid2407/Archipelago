@@ -107,7 +107,7 @@ class DragonQuestIX(World):
         self.create_entrance(region_zere, region_brigadoom, Has("Defeated Wight Knight"))
 
         region_coffinwell = self.create_region_with_locations(region_name="Coffinwell")
-        self.create_entrance(region_stornway, region_coffinwell)
+        self.create_entrance(region_brigadoom, region_coffinwell, Has("Defeated Morag"))
         region_quarantomb = self.create_region_with_locations(region_name="Quarantomb")
         region_quarantomb.add_event(location_name="Boss: Ragin' Contagion", item_name="Defeated Ragin' Contagion", rule=Has("Boss Key: Ragin' Contagion"))
         self.create_entrance(region_coffinwell, region_quarantomb)
@@ -270,5 +270,7 @@ class DragonQuestIX(World):
             self.set_rule(spot=self.get_location("Dourbridge - secret shop"), rule=Has("Ultimate Key"))
             self.set_rule(spot=self.get_location("The Plumbed Depths - B1 (dungeon)"), rule=HasAny("Ultimate Key", "Magic Key"))
             self.set_rule(spot=self.get_location("The Plumbed Depths - B2 (graves)"), rule=HasAny("Ultimate Key", "Magic Key"))
+            self.set_rule(spot=self.get_location("Bloomingdale - old man's bath"), rule=Has("Ultimate Key"))
+            self.set_rule(spot=self.get_location("Bloomingdale - old man's bath B1"), rule=Has("Ultimate Key"))
             if self.options.end_boss == EndBoss.option_corvus:
                 self.set_rule(spot=self.get_location("The Magmaroo - Greygnarl's Lair"), rule=Has("Defeated Goreham-Hogg (I)"))
