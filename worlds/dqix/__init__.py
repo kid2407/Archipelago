@@ -103,11 +103,11 @@ class DragonQuestIX(World):
         self.create_entrance(region_stornway, region_zere)
         region_brigadoom = self.create_region_with_locations(region_name="Brigadoom")
         region_brigadoom.add_event(location_name="Boss: Morag", item_name="Defeated Morag", rule=Has("Boss Key: Morag"))
-        self.create_entrance(region_stornway, region_brigadoom, Has("Defeated Wight Knight"))
-        self.create_entrance(region_zere, region_brigadoom, Has("Defeated Wight Knight"))
+        self.create_entrance(region_stornway, region_brigadoom)
+        self.create_entrance(region_zere, region_brigadoom)
 
         region_coffinwell = self.create_region_with_locations(region_name="Coffinwell")
-        self.create_entrance(region_brigadoom, region_coffinwell, Has("Defeated Morag"))
+        self.create_entrance(region_brigadoom, region_coffinwell, HasAll("Defeated Morag", "Defeated Wight Knight"))
         region_quarantomb = self.create_region_with_locations(region_name="Quarantomb")
         region_quarantomb.add_event(location_name="Boss: Ragin' Contagion", item_name="Defeated Ragin' Contagion", rule=Has("Boss Key: Ragin' Contagion"))
         self.create_entrance(region_coffinwell, region_quarantomb)
@@ -228,7 +228,7 @@ class DragonQuestIX(World):
                 self.create_entrance(region_goretress, region_gittingham_palace, Has("Defeated Goreham-Hogg (I)"))
 
                 region_oubliette = self.create_region_with_locations(region_name="Oubliette")
-                self.create_entrance(region_gittingham_palace, region_oubliette)
+                self.create_entrance(region_gittingham_palace, region_oubliette, Has("Defeated King Godwyn"))
 
                 region_realm_of_the_mighty = self.create_region_with_locations(region_name="Realm of the Mighty")
                 region_realm_of_the_mighty.add_event(location_name="Boss: Goreham-Hogg (II)", item_name="Defeated Goreham-Hogg (II)", rule=Has("Boss Key: Goreham-Hogg (II)"))
