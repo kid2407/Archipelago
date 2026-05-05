@@ -1,4 +1,4 @@
-from bases import WorldTestBase
+from test.bases import WorldTestBase
 from .. import DragonQuestIX
 
 
