@@ -1,12 +1,14 @@
 from typing import List
 
 from .bases import DQIXTestBase
+from .. import EndBoss
+from ..Options import FillerAmount
 
 
-class TestBossKeyLogic(DQIXTestBase):
+class TestBossCorvus(DQIXTestBase):
     options = {
-        "end_boss": 2,
-        "filler_amount": 10
+        "end_boss": EndBoss.option_corvus,
+        "filler_amount": FillerAmount.default
     }
 
     BOSS_REQUIREMENTS = [
@@ -30,10 +32,11 @@ class TestBossKeyLogic(DQIXTestBase):
 
         for boss_name in boss_names:
             self.collect_by_name("Boss Key: " + boss_name)
+
         for region_name in region_names:
             with self.subTest(f"Test that \"{region_name}\" can be accessed with the following keys: {boss_key_list}"):
                 self.assertTrue(self.can_reach_region(region_name), f"\"{region_name}\" cannot be accessed even though all required boss keys are present: {boss_key_list}")
 
-    def test_boss_keys(self):
+    def test_boss_key_logic(self):
         for boss_data in self.BOSS_REQUIREMENTS:
             self.check_boss_keys_for_regions(boss_data["bosses"], boss_data["regions"])
