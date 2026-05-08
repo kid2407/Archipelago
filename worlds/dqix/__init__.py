@@ -76,7 +76,7 @@ class DragonQuestIX(World):
         # Goal condition
         self.set_completion_rule(self.get_completion_condition())
 
-        if BaseHelper.DEBUG_MODE:
+        if __debug__:
             state = self.multiworld.get_all_state(use_cache=False, allow_partial_entrances=True)
             state.update_reachable_regions(self.player)
             visualize_regions(root_region=self.multiworld.get_region(self.origin_region_name, self.player), file_name="my_world.puml", show_entrance_names=True,

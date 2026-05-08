@@ -9,8 +9,6 @@ if TYPE_CHECKING:
 
 
 class BaseHelper:
-    DEBUG_MODE = False
-
     def __init__(self, ctx: "BizHawkClientContext"):
         self.ctx = ctx
 
@@ -41,5 +39,5 @@ class BaseHelper:
 
     @staticmethod
     def debug(msg: str, *args):
-        if BaseHelper.DEBUG_MODE:
+        if __debug__:
             logging.debug("[DQIX] " + msg, *args)
