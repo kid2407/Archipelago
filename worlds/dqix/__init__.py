@@ -76,12 +76,6 @@ class DragonQuestIX(World):
         # Goal condition
         self.set_completion_rule(self.get_completion_condition())
 
-        if __debug__:
-            state = self.multiworld.get_all_state(use_cache=False, allow_partial_entrances=True)
-            state.update_reachable_regions(self.player)
-            visualize_regions(root_region=self.multiworld.get_region(self.origin_region_name, self.player), file_name="my_world.puml", show_entrance_names=True,
-                              regions_to_highlight=set(state.reachable_regions[self.player]))
-
     def create_region_with_locations(self, region_name: str):
         region = Region(region_name, self.player, self.multiworld)
         region.add_locations(locations=self.location_helper.get_locations_for_group(region_name), location_type=DQIXLocation)
