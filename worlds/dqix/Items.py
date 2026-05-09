@@ -1,9 +1,11 @@
 import json
 import pkgutil
 from enum import Enum
-from typing import Dict, NamedTuple, Optional
+from typing import Dict, NamedTuple, Optional, List
 
 from BaseClasses import ItemClassification, Item
+from Options import OptionError
+from .Options import DQIXOptions, EndBoss
 
 
 class DQIXItem(Item):
@@ -21,7 +23,7 @@ class ItemType(Enum):
     EXPERIENCE = "exp"
     GOLD = "gold"
     IMPORTANT_ITEM = "important"
-    BOSS_ITEM = "boss"
+    BOSS_KEY = "boss"
 
 
 class ItemData(NamedTuple):
@@ -70,3 +72,31 @@ class DQIXItems:
 
     def get_filler_item_names(self):
         return list(self.filler_items.keys())
+
+    def filter_progression_items(self, item_names: List[str], options: DQIXOptions):
+        prog_items = []
+        allowed_boss_keys = self.get_allowed_boss_keys(options)
+
+        for item_name in item_names:
+            item_type = self.get_item_type(item_name)
+
+            if item_type == ItemType.IMPORTANT_ITEM:
+                prog_items.append(item_name)
+            elif self.get_item_type(item_name) == ItemType.BOSS_KEY and item_name in allowed_boss_keys:
+                prog_items.append(item_name)
+
+        return prog_items
+
+    @staticmethod
+    def get_allowed_boss_keys(options: DQIXOptions) -> List[str]:
+        if options.end_boss == EndBoss.option_master_of_nuun:
+            bosses = ["Hexagoon", "Wight Knight", "Morag", "Ragin' Contagion", "Master of Nu'un"]
+        elif options.end_boss == EndBoss.option_greygnarl:
+            bosses = ["Hexagoon", "Wight Knight", "Morag", "Ragin' Contagion", "Master of Nu'un", "Lleviathan", "Garth Goyle", "Tyrantula", "Grand Lizzier", "Larstastnaras", "Dreadmaster", "Gadrongo", "Greygnarl"]
+        elif options.end_boss == EndBoss.option_corvus:
+            bosses = ["Hexagoon", "Wight Knight", "Morag", "Ragin' Contagion", "Master of Nu'un", "Lleviathan", "Garth Goyle", "Tyrantula", "Grand Lizzier", "Larstastnaras", "Dreadmaster", "Gadrongo", "Greygnarl", "Goreham-Hogg (I)",
+                      "Hootingham-Gore (I)", "Goresby-Purrvis (I)", "King Godwyn", "Goreham-Hogg (II)", "Hootingham-Gore (II)", "Goresby-Purrvis (II)", "Corvus (I)", "Barbarus", "Corvus (II)"]
+        else:
+            raise OptionError("Could not determine required Boss Keys: Invalid Option for \"end_boss\": " + options.end_boss)
+
+        return [f"Boss Key: {boss_name}" for boss_name in bosses]

@@ -37,7 +37,7 @@ class InventoryHelper(BaseHelper):
         elif 100010 <= item_id < 100020:
             return ItemType.EXPERIENCE
         elif 50000 <= item_id <= 50022:
-            return ItemType.BOSS_ITEM
+            return ItemType.BOSS_KEY
         return None
 
     @staticmethod
@@ -76,7 +76,7 @@ class InventoryHelper(BaseHelper):
                                             segment_count=DQIXConstants.COMMON_ITEMS_SEGMENTS, item_id=item_id)
             case ItemType.EQUIPMENT:
                 await self.grant_equipment(item_id=item_id)
-            case ItemType.BOSS_ITEM:
+            case ItemType.BOSS_KEY:
                 await self.grant_boss_item(item_id=item_id)
             case None:
                 self.warning("Uh-oh, could not determine the item type for item with ID = {0}. This should not happen, please report this error to the author.".format(item_id))

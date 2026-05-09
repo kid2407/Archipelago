@@ -2,12 +2,11 @@ from typing import Mapping, Any
 
 from BaseClasses import Tutorial, ItemClassification, Region
 from Options import OptionError
-from Utils import visualize_regions
 from rule_builder.rules import Has, HasAll, Rule, HasAny
 from .Client import DQIXClient
+from .Options import EndBoss, DQIXOptions
 from .Items import DQIXItems, ItemType, DQIXItem
 from .Locations import DQIXLocations, DQIXLocation
-from .Options import DQIXOptions, EndBoss
 from .helper.BaseHelper import BaseHelper
 from ..AutoWorld import World, WebWorld
 
@@ -53,7 +52,9 @@ class DragonQuestIX(World):
     def create_items(self) -> None:
         total_location_count = len(self.multiworld.get_unfilled_locations(self.player))
         # Generate / Load all progression items
-        progression_item_names = {k for k in self.item_name_to_id.keys() if self.item_helper.is_progression(k)}
+        progression_item_names = [k for k in self.item_name_to_id.keys() if self.item_helper.is_progression(k)]
+        progression_item_names = self.item_helper.filter_progression_items(progression_item_names, self.options)
+
         items = [self.create_item(name) for name in progression_item_names]
 
         # Fill up to X% of the remaining item slots with useful items

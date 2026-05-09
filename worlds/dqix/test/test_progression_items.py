@@ -46,4 +46,4 @@ class TestBossKeysCorvus(BossKeyHelper):
 
     VALID_BOSSES = ["Hexagoon", "Wight Knight", "Morag", "Ragin' Contagion", "Master of Nu'un", "Lleviathan", "Garth Goyle", "Tyrantula", "Grand Lizzier", "Larstastnaras", "Dreadmaster", "Gadrongo",
                     "Greygnarl", "Goreham-Hogg (I)", "Hootingham-Gore (I)", "Goresby-Purrvis (I)", "King Godwyn", "Goreham-Hogg (II)", "Hootingham-Gore (II)", "Goresby-Purrvis (II)", "Corvus (I)",
-                    "Barbarus", "Corvus (II)", ]
+                    "Barbarus", "Corvus (II)" ]
