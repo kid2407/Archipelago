@@ -167,9 +167,11 @@ class DQIXClient(BizHawkClient):
 
             for char_status_address in [DQIXConstants.CHAR_1_BATTLE_STATUS, DQIXConstants.CHAR_2_BATTLE_STATUS, DQIXConstants.CHAR_3_BATTLE_STATUS, DQIXConstants.CHAR_4_BATTLE_STATUS]:
                 char_status = await self.base_helper.read_int_from_ram(char_status_address, 1)
+                status_as_bit_list = list(format(char_status, '08b'))
                 # If not already dead
-                if char_status != 1:
-                    await self.base_helper.write_int_to_ram(char_status_address, 1, 2)
+                if status_as_bit_list[7] != "1":
+                    status_as_bit_list[4] = "1"
+                    await self.base_helper.write_int_to_ram(char_status_address, 1, int("".join(status_as_bit_list), 2))
 
     def update_boss_list(self, items_received: List[NetworkItem]):
         for _, network_item in enumerate(items_received):
