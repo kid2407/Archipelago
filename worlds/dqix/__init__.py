@@ -1,12 +1,12 @@
 from typing import Mapping, Any
 
-from BaseClasses import Tutorial, ItemClassification, Region
+from BaseClasses import Tutorial, Region
 from Options import OptionError
 from rule_builder.rules import Has, HasAll, Rule, HasAny
 from .Client import DQIXClient
+from .Items import DQIXItems, ItemType, DQIXItem, all_items, all_items_dict
+from .Locations import DQIXLocation, all_locations_dict, all_locations_by_region
 from .Options import EndBoss, DQIXOptions
-from .Items import DQIXItems, ItemType, DQIXItem
-from .Locations import DQIXLocations, DQIXLocation
 from .helper.BaseHelper import BaseHelper
 from ..AutoWorld import World, WebWorld
 
@@ -32,28 +32,22 @@ class DragonQuestIX(World):
     origin_region_name = "Angel Falls"
     web = DragonQuestIXWeb()
 
-    location_helper = DQIXLocations()
     item_helper = DQIXItems()
 
-    location_name_to_id = location_helper.get_locations()
-    item_name_to_id = item_helper.get_items()
+    location_name_to_id = all_locations_dict
+    item_name_to_id = all_items
 
     options_dataclass = DQIXOptions
     options: DQIXOptions
 
     def create_item(self, name: str) -> "DQIXItem":
-        return DQIXItem(name,
-                        ItemClassification.progression if self.item_helper.is_progression(name) else ItemClassification.useful if self.item_helper.is_useful(name) else ItemClassification.filler,
-                        self.item_name_to_id[name],
-                        self.player,
-                        self.item_helper.get_item_type(name)
-                        )
+        cur_item_data = all_items_dict[name]
+        return DQIXItem(name, cur_item_data.classification, cur_item_data.code, self.player, cur_item_data.item_type.value)
 
     def create_items(self) -> None:
         total_location_count = len(self.multiworld.get_unfilled_locations(self.player))
         # Generate / Load all progression items
-        progression_item_names = [k for k in self.item_name_to_id.keys() if self.item_helper.is_progression(k)]
-        progression_item_names = self.item_helper.filter_progression_items(progression_item_names, self.options)
+        progression_item_names = self.item_helper.get_active_progression_items(self.options)
 
         items = [self.create_item(name) for name in progression_item_names]
 
@@ -79,7 +73,7 @@ class DragonQuestIX(World):
 
     def create_region_with_locations(self, region_name: str):
         region = Region(region_name, self.player, self.multiworld)
-        region.add_locations(locations=self.location_helper.get_locations_for_group(region_name), location_type=DQIXLocation)
+        region.add_locations(locations=all_locations_by_region[region_name], location_type=DQIXLocation)
         return region
 
     def create_and_connect_regions(self):
