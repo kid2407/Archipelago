@@ -40,7 +40,10 @@ class TestBossCorvus(EndBossHelper):
         {"bosses": ["Master of Nu'un", "Lleviathan", "Garth Goyle", "Tyrantula", "Grand Lizzier", "Larstastnaras", "Dreadmaster", "Gadrongo"], "regions": ["Upover"]},
         {"bosses": ["Greygnarl"], "regions": ["Goretress"]},
         {"bosses": ["Goreham-Hogg (I)", "Hootingham-Gore (I)"], "regions": ["Gittingham Palace"]},
-        {"bosses": ["Goresby-Purrvis (I)", "King Godwyn"], "regions": ["Oubliette", "Realm of the Mighty"]}
+        {"bosses": ["Goresby-Purrvis (I)", "King Godwyn"], "regions": ["Oubliette", "Realm of the Mighty - Initial"]},
+        {"bosses": ["Goreham-Hogg (II)"], "regions": ["Realm of the Mighty - After Goreham-Hogg"]},
+        {"bosses": ["Hootingham-Gore (II)"], "regions": ["Realm of the Mighty - After Hootingham-Gore"]},
+        {"bosses": ["Goresby-Purrvis (II)"], "regions": ["Realm of the Mighty - After Goresby-Purrvis"]},
     ]
 
 

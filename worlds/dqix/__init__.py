@@ -219,19 +219,31 @@ class DragonQuestIX(World):
                 region_oubliette = self.create_region_with_locations(region_name="Oubliette")
                 self.create_entrance(region_gittingham_palace, region_oubliette, Has("Defeated King Godwyn"))
 
-                region_realm_of_the_mighty = self.create_region_with_locations(region_name="Realm of the Mighty")
-                region_realm_of_the_mighty.add_event(location_name="Boss: Goreham-Hogg (II)", item_name="Defeated Goreham-Hogg (II)", rule=Has("Boss Key: Goreham-Hogg (II)"))
-                region_realm_of_the_mighty.add_event(location_name="Boss: Hootingham-Gore (II)", item_name="Defeated Hootingham-Gore (II)", rule=Has("Boss Key: Hootingham-Gore (II)"))
-                region_realm_of_the_mighty.add_event(location_name="Boss: Goresby-Purrvis (II)", item_name="Defeated Goresby-Purrvis (II)", rule=Has("Boss Key: Goresby-Purrvis (II)"))
-                region_realm_of_the_mighty.add_event(location_name="Boss: Corvus (I)", item_name="Defeated Corvus (I)", rule=Has("Boss Key: Corvus (I)"))
-                region_realm_of_the_mighty.add_event(location_name="Boss: Barbarus", item_name="Defeated Barbarus", rule=Has("Boss Key: Barbarus"))
-                region_realm_of_the_mighty.add_event(location_name="Boss: Corvus (II)", item_name="Defeated Corvus (II)", rule=Has("Boss Key: Corvus (II)"))
-                self.create_entrance(region_oubliette, region_realm_of_the_mighty, HasAll("Defeated Hootingham-Gore (I)", "Defeated Goresby-Purrvis (I)", "Defeated King Godwyn"))
+                region_realm_of_the_mighty_part_1 = self.create_region_with_locations(region_name="Realm of the Mighty - Initial")
+                region_realm_of_the_mighty_part_1.add_event(location_name="Boss: Goreham-Hogg (II)", item_name="Defeated Goreham-Hogg (II)", rule=Has("Boss Key: Goreham-Hogg (II)"))
+                self.create_entrance(region_oubliette, region_realm_of_the_mighty_part_1, HasAll("Defeated Hootingham-Gore (I)", "Defeated Goresby-Purrvis (I)", "Defeated King Godwyn"))
+
+                region_realm_of_the_mighty_part_2 = self.create_region_with_locations(region_name="Realm of the Mighty - After Goreham-Hogg")
+                region_realm_of_the_mighty_part_2.add_event(location_name="Boss: Hootingham-Gore (II)", item_name="Defeated Hootingham-Gore (II)", rule=Has("Boss Key: Hootingham-Gore (II)"))
+                self.create_entrance(region_realm_of_the_mighty_part_1, region_realm_of_the_mighty_part_2, Has("Defeated Goreham-Hogg (II)"))
+
+                region_realm_of_the_mighty_part_3 = self.create_region_with_locations(region_name="Realm of the Mighty - After Hootingham-Gore")
+                region_realm_of_the_mighty_part_3.add_event(location_name="Boss: Goresby-Purrvis (II)", item_name="Defeated Goresby-Purrvis (II)", rule=Has("Boss Key: Goresby-Purrvis (II)"))
+                self.create_entrance(region_realm_of_the_mighty_part_2, region_realm_of_the_mighty_part_3, Has("Defeated Hootingham-Gore (II)"))
+
+                region_realm_of_the_mighty_part_4 = self.create_region_with_locations(region_name="Realm of the Mighty - After Goresby-Purrvis")
+                region_realm_of_the_mighty_part_4.add_event(location_name="Boss: Corvus (I)", item_name="Defeated Corvus (I)", rule=Has("Boss Key: Corvus (I)"))
+                region_realm_of_the_mighty_part_4.add_event(location_name="Boss: Barbarus", item_name="Defeated Barbarus", rule=Has("Boss Key: Barbarus"))
+                region_realm_of_the_mighty_part_4.add_event(location_name="Boss: Corvus (II)", item_name="Defeated Corvus (II)", rule=Has("Boss Key: Corvus (II)"))
+                self.create_entrance(region_realm_of_the_mighty_part_3, region_realm_of_the_mighty_part_4, Has("Defeated Goresby-Purrvis (II)"))
 
                 regions.append(region_goretress)
                 regions.append(region_gittingham_palace)
                 regions.append(region_oubliette)
-                regions.append(region_realm_of_the_mighty)
+                regions.append(region_realm_of_the_mighty_part_1)
+                regions.append(region_realm_of_the_mighty_part_2)
+                regions.append(region_realm_of_the_mighty_part_3)
+                regions.append(region_realm_of_the_mighty_part_4)
 
         return regions
 
@@ -259,7 +271,5 @@ class DragonQuestIX(World):
             self.set_rule(spot=self.get_location("Dourbridge - secret shop"), rule=Has("Ultimate Key"))
             self.set_rule(spot=self.get_location("The Plumbed Depths - B1 (dungeon)"), rule=HasAny("Ultimate Key", "Magic Key"))
             self.set_rule(spot=self.get_location("The Plumbed Depths - B2 (graves)"), rule=HasAny("Ultimate Key", "Magic Key"))
-            self.set_rule(spot=self.get_location("Bloomingdale - old man's bath"), rule=Has("Ultimate Key"))
-            self.set_rule(spot=self.get_location("Bloomingdale - old man's bath B1"), rule=Has("Ultimate Key"))
             if self.options.end_boss == EndBoss.option_corvus:
                 self.set_rule(spot=self.get_location("The Magmaroo - Greygnarl's Lair"), rule=Has("Defeated Goreham-Hogg (I)"))

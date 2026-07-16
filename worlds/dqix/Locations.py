@@ -170,8 +170,6 @@ all_locations_by_region: Dict[str, Dict[str, int]] = {
         "Bloomingdale - inn": 1909,
         "Bloomingdale - inn L2": 1910,
         "Bloomingdale - inn B1": 1911,
-        "Bloomingdale - old man's bath": 1912,
-        "Bloomingdale - old man's bath B1": 1913,
         "Bloomingdale - well": 1914
     },
     "Bad Cave": {
@@ -331,28 +329,34 @@ all_locations_by_region: Dict[str, Dict[str, int]] = {
         "Oubliette - B5": 8705,
         "Oubliette - B6": 8706
     },
-    "Realm of the Mighty": {
+    "Realm of the Mighty - Initial": {
         "Realm of the Mighty - entrance": 4400,
-        "Realm of the Mighty - outside L6": 4401,
-        "Realm of the Mighty - outside L8": 4402,
-        "Realm of the Mighty - red sphere": 4403,
         "Realm of the Mighty - L1": 4404,
         "Realm of the Mighty - B1": 4405,
         "Realm of the Mighty - B2": 4406,
         "Realm of the Mighty - L2": 4408,
         "Realm of the Mighty - L3": 4409,
         "Realm of the Mighty - L4": 4410,
+    },
+    "Realm of the Mighty - After Goreham-Hogg": {
         "Realm of the Mighty - L5": 4411,
-        "Realm of the Mighty - L1 (right room)": 4412,
         "Realm of the Mighty - L6": 4413,
+        "Realm of the Mighty - L1 (right room)": 4412,
+        "Realm of the Mighty - outside L6": 4401,
         "Realm of the Mighty - L8": 4414,
+    },
+    "Realm of the Mighty - After Hootingham-Gore": {
+        "Realm of the Mighty - L8 (right corridor)": 4419,
+        "Realm of the Mighty - outside L8": 4402,
+        "Realm of the Mighty - red sphere": 4403,
         "Realm of the Mighty - L8 (left corridor)": 4416,
         "Realm of the Mighty - L9 (left room)": 4417,
         "Realm of the Mighty - L9 (right room)": 4418,
-        "Realm of the Mighty - L8 (right corridor)": 4419,
         "Realm of the Mighty - L10": 4420,
         "Realm of the Mighty - L11": 4421,
         "Palace of the Mighty": 4422,
+    },
+    "Realm of the Mighty - After Goresby-Purrvis": {
         "Palace of the Mighty, L1": 4423,
         "Palace of the Mighty, L2": 4424
     },
