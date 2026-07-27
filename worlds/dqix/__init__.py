@@ -8,7 +8,7 @@ from .Items import DQIXItems, ItemType, DQIXItem, all_items, all_items_dict
 from .Locations import DQIXLocation, all_locations_dict, all_locations_by_region
 from .Options import EndBoss, DQIXOptions
 from .helper.BaseHelper import BaseHelper
-from ..AutoWorld import World, WebWorld
+from AutoWorld import World, WebWorld
 
 
 class DragonQuestIXWeb(WebWorld):
