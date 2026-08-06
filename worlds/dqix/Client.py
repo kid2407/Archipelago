@@ -58,9 +58,15 @@ class DQIXClient(BizHawkClient):
             if await self.is_ready_and_in_game():
                 await bizhawk.set_message_interval(ctx=ctx.bizhawk_ctx, value=5)
 
+                saved_expected_index = await self.base_helper.read_int_from_ram(DQIXConstants.NEXT_EXPECTED_INDEX, 4)
+                # If no previous value is known, use the value loaded from the save
                 if self.next_expected_item_index is None:
-                    self.next_expected_item_index = await self.base_helper.read_int_from_ram(DQIXConstants.NEXT_EXPECTED_INDEX, 4)
+                    self.next_expected_item_index = saved_expected_index
                     BaseHelper.info("Read next expected index from RAM, it is: " + str(self.next_expected_item_index))
+                # If the expected index is lower that before, a save was probably loaded, so we use the new value and request a resync
+                elif saved_expected_index < self.next_expected_item_index:
+                    self.next_expected_item_index = saved_expected_index
+                    self.syncing = True
 
                 if self.syncing:
                     sync_msg = [{'cmd': 'Sync'}]
@@ -68,6 +74,7 @@ class DQIXClient(BizHawkClient):
                         sync_msg.append({"cmd": "LocationChecks", "locations": list(ctx.locations_checked)})
                     await ctx.send_msgs(sync_msg)
                     self.syncing = False
+                    pass
 
                 await self.location_check(ctx)
                 await self.bestiary_check(ctx)
